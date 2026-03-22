@@ -105,7 +105,7 @@ export default function MainPage({ dict }) {
             id="main-map-heading"
             className="text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl"
           >
-            {dict?.contacts?.title || 'Как добраться'}
+            {dict?.mainPage?.mapSection?.title ?? 'Карта'}
           </h2>
           <p className="mt-3 max-w-2xl text-neutral-600">
             {dict?.mainPage?.mapSection?.description ??
@@ -115,7 +115,7 @@ export default function MainPage({ dict }) {
             id="map"
             className="mt-8 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-neutral-100 shadow-soft"
           >
-            <Map ariaLabel={dict?.contacts?.title || 'Карта колледжа'} />
+            <Map ariaLabel={dict?.mainPage?.mapSection?.title ?? 'Карта'} />
           </div>
         </Container>
       </section>

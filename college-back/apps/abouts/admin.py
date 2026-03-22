@@ -14,7 +14,6 @@ from apps.abouts.models import (
     Contact_information,
     FAQ,
     Sertificate,
-    Sample,
     Images_for_multimedia,
     Block_of_contact,
     Lecturer,
@@ -54,62 +53,90 @@ class DuplicateActionAdminMixin:
 
     actions = ["duplicate_selected"]
 
+
 @admin.register(Email_sending)
 class Email_sendingAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
     list_display = ["id", "receiver"]
 
     def has_add_permission(self, request):
-        count = Email_sending.objects.count()
-        if count == 0:
-            return True
-        return False
+        return Email_sending.objects.count() == 0
 
 
 @admin.register(FAQ)
-class FAQAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "question", "answer"]
+class FAQAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
+    list_display = ["id", "question"]
+    search_fields = ["question", "answer"]
+    fieldsets = (
+        (_("Вопрос и ответ (переводы по языкам)"), {"fields": ("question", "answer")}),
+    )
 
 
 @admin.register(Contact_information)
-class Contact_informationAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "text", "type"]
+class Contact_informationAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
+    list_display = ["id", "type", "title", "text"]
+    list_filter = ["type"]
+    fieldsets = (
+        (_("Тип строки"), {"fields": ("type",)}),
+        (_("Тексты (переводы по языкам)"), {"fields": ("title", "text")}),
+    )
 
 
 @admin.register(Sertificate)
 class SertificateAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
     list_display = ["id", "sort_order", "section", "title", "image"]
     list_filter = ["section"]
-    sortable_by = ["sort_order", "id"]
+    ordering = ["section", "sort_order", "id"]
+
+    fieldsets = (
+        (
+            _("Раздел на сайте «Награды»"),
+            {
+                "fields": ("section", "sort_order"),
+                "description": _(
+                    "«Зал славы» и «Партнёры» — отдельные блоки; «Прочие» — остальная сетка."
+                ),
+            },
+        ),
+        (
+            _("Подпись и описание (переводы по языкам)"),
+            {"fields": ("title", "description")},
+        ),
+        (_("Изображение грамоты / сертификата"), {"fields": ("image",)}),
+    )
 
 
 @admin.register(Images_for_multimedia)
-class Images_for_multimediaAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
+class Images_for_multimediaAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
     list_display = [
         "id",
         "type",
         "preview_thumb",
-        "title_ru",
+        "title",
         "link",
         "video_file",
     ]
     list_filter = ["type"]
-    search_fields = ["title_ru", "title_ky", "title_en"]
+    search_fields = ["title"]
+
     fieldsets = (
+        (_("Тип"), {"fields": ("type",)}),
         (
-            _("Тип"),
-            {"fields": ("type",)},
-        ),
-        (
-            _("Название (переводы)"),
-            {"fields": ("title_ru", "title_ky", "title_en")},
+            _("Название (переводы по языкам)"),
+            {
+                "fields": ("title",),
+                "description": _("Одно поле «Название» — ниже переключатель RU / EN / KY, без дублирования «Название» и «Название RU»."),
+            },
         ),
         (
             _("Изображение / постер"),
             {
                 "fields": ("image",),
                 "description": _(
-                    "Обязательно для типа «Фото». "
-                    "Для «Видео» можно загрузить постер или оставить пустым."
+                    "Обязательно для типа «Фото». Для «Видео» можно загрузить постер или оставить пустым."
                 ),
             },
         ),
@@ -118,8 +145,7 @@ class Images_for_multimediaAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
             {
                 "fields": ("link", "video_file"),
                 "description": _(
-                    "Только для типа «Видео»: вставьте ссылку на ролик YouTube/Vimeo "
-                    "или загрузите файл MP4/WebM. Не заполняйте ссылку и файл одновременно."
+                    "Только для типа «Видео»: ссылка YouTube/Vimeo **или** файл MP4/WebM — не оба сразу."
                 ),
             },
         ),
@@ -136,17 +162,44 @@ class Images_for_multimediaAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(Contact)
-class ContactAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
+class ContactAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
     list_display = ["id", "title", "role", "email", "contact"]
+    search_fields = ["title", "role", "email", "contact"]
+    fieldsets = (
+        (
+            _("Контакты без перевода"),
+            {"fields": ("email", "contact")},
+        ),
+        (
+            _("ФИО и роль (переводы по языкам)"),
+            {"fields": ("title", "role")},
+        ),
+    )
+
 
 @admin.register(Block_of_contact)
-class Block_of_contactAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
+class Block_of_contactAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
     list_display = ["id", "title", "contact", "email"]
+    fieldsets = (
+        (_("Без перевода"), {"fields": ("contact", "email")}),
+        (_("Заголовок (переводы по языкам)"), {"fields": ("title",)}),
+    )
+
 
 @admin.register(Lecturer)
-class LecturerAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "name", "avatar", "age", "bio", "subject"]
+class LecturerAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
+    list_display = ["id", "name", "avatar", "age", "subject"]
+    fieldsets = (
+        (
+            _("Фото и возраст (без перевода)"),
+            {"fields": ("avatar", "age")},
+        ),
+        (
+            _("ФИО, био, предмет (переводы по языкам)"),
+            {"fields": ("name", "bio", "subject")},
+        ),
+    )
 
-@admin.register(Sample)
-class SampleAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "description", "file", "date"]

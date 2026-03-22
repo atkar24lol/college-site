@@ -10,11 +10,6 @@ router.register(
     basename='admission-dates'
 )
 router.register(
-    prefix='scholorships-grants',
-    viewset=Scholorship_grantViewSet,
-    basename='scholorships-grants'
-)
-router.register(
     prefix='courses-programms',
     viewset=Courses_programmsViewSet,
     basename='courses-programms'

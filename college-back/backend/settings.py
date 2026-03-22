@@ -15,7 +15,13 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ("*", )
+def _csv_list(value, default="*"):
+    """Список из переменной вида «a,b,c» (пробелы обрезаются)."""
+    raw = (value or "").strip() or default
+    return [x.strip() for x in raw.split(",") if x.strip()]
+
+
+ALLOWED_HOSTS = _csv_list(config("ALLOWED_HOSTS", default="*"))
 
 
 # Application definition
@@ -154,18 +160,30 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'https://example.com',
-]
+# Через запятую: https://ваш-сайт.kg,https://www.ваш-сайт.kg
+CORS_ALLOWED_ORIGINS = _csv_list(
+    config("CORS_ALLOWED_ORIGINS", default="http://localhost:3000"),
+    default="http://localhost:3000",
+)
 CORS_ALLOW_ALL_ORIGINS = False
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# За reverse proxy (nginx) с HTTPS
+if config("USE_TLS_BEHIND_PROXY", default=False, cast=bool):
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    USE_X_FORWARDED_HOST = True
+
+# Для отладки без SMTP: EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+EMAIL_BACKEND = config(
+    'EMAIL_BACKEND',
+    default='django.core.mail.backends.smtp.EmailBackend',
+)
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+# Gmail и многие SMTP требуют, чтобы From совпадал с EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default=EMAIL_HOST_USER or 'noreply@localhost')
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'backend.pagination.PageSizePagination',

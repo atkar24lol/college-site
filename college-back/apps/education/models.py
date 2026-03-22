@@ -3,24 +3,19 @@ from django.utils.timezone import now
 
 
 class Admission_date(models.Model):
-    title = models.CharField(max_length=255, verbose_name='Название', null=True, blank=True)
-    event_date = models.DateTimeField(verbose_name='Дата', default=now)
+    title = models.CharField(max_length=255, verbose_name="Название", null=True, blank=True)
+    event_date = models.DateTimeField(verbose_name="Дата и время", default=now)
     description = models.TextField(verbose_name="Описание")
 
-
-class Scholorship_grant(models.Model):
-    class TypeChoice(models.TextChoices):
-        scholorship = "scholorship"
-        grant = "grant"
-    title = models.CharField(max_length=255, verbose_name='Название', null=True, blank=True)
-    description = models.TextField(verbose_name="Описание")
-    type = models.CharField(verbose_name='Стипендия/грант', max_length=255, choices=TypeChoice.choices)
+    class Meta:
+        verbose_name = "Срок приёмной кампании"
+        verbose_name_plural = "Сроки приёмной кампании"
 
 
 class Courses_programms(models.Model):
     class TypeChoice(models.TextChoices):
-        student = "student"
-        lecturer = "lecturer"
+        student = "student", "Для слушателей / студентов"
+        lecturer = "lecturer", "Для преподавателей"
 
     sort_order = models.PositiveIntegerField(default=0, verbose_name='Порядок в каталоге')
     show_on_additional_education = models.BooleanField(
@@ -62,8 +57,12 @@ class Courses_programms(models.Model):
 
 
 class Schedule(models.Model):
-    title = models.CharField(verbose_name='Название', max_length=255, null=True, blank=True)
-    file = models.FileField(verbose_name='Файл', upload_to='schedule')
+    title = models.CharField(verbose_name="Название", max_length=255, null=True, blank=True)
+    file = models.FileField(verbose_name="Файл расписания", upload_to="schedule")
+
+    class Meta:
+        verbose_name = "Расписание (файл)"
+        verbose_name_plural = "Расписания"
 
 
 class LectureMaterialsSection(models.Model):

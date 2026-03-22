@@ -1,21 +1,15 @@
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from django.urls import path, include
 
-from .views import *
+from .views import NewsViewSet
 
 router = DefaultRouter()
 router.register(
-    prefix='news',
+    prefix="news",
     viewset=NewsViewSet,
-    basename='news'
+    basename="news",
 )
-router.register(
-    prefix='main-page-news',
-    viewset=Main_page_newsSerializer,
-    basename='main-page-news'
-)
-
 
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
 ]

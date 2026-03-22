@@ -18,15 +18,6 @@ class Admission_dateViewSet(ModelViewSet):
     filterset_fields = ["title", "description"]
 
 
-class Scholorship_grantViewSet(ModelViewSet):
-    queryset = Scholorship_grant.objects.all()
-    serializer_class = Scholorship_grantSerializer
-    permission_classes = (AllowAny, )
-    filter_backends = [filters.DjangoFilterBackend, SearchFilter]
-    search_fields =["title", "description", "type"]
-    filterset_fields =["title", "description", "type"]
-
-
 class Courses_programmsViewSet(ModelViewSet):
     queryset = Courses_programms.objects.all()
     serializer_class = Courses_programmsSerializer

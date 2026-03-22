@@ -42,11 +42,6 @@ export function getHeroMeta(path, lang, dict, params = {}) {
     { test: (p) => p === `/${lang}/specialities/informatics`, title: m?.titles?.nine, desc: m?.descriptions?.nine },
     { test: (p) => p === `/${lang}/specialities/agricultural_entrepreneurship`, title: m?.titles?.ten, desc: m?.descriptions?.ten },
     { test: (p) => p === `/${lang}/specialities/ecology`, title: m?.titles?.eleven, desc: m?.descriptions?.eleven },
-    {
-      test: (p) => p === `/${lang}/site-map`,
-      title: dict?.footer?.list?.siteMap || 'Карта сайта',
-      desc: '',
-    },
   ];
 
   for (const r of routes) {

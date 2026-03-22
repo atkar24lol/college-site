@@ -80,11 +80,12 @@ export default function Header() {
       <div className="border-b border-neutral-200/80 bg-[#1c1917] text-[13px] text-neutral-300">
         <Container className="flex h-10 items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href={`/${lang}/contacts`} className="hidden hover:text-white sm:inline transition-colors">
-              {dict?.footer?.list?.phone ?? '+996 312 …'}
-            </Link>
-            <button type="button" onClick={scrollToMap} className="hidden hover:text-white sm:inline transition-colors">
-              {dict?.contacts?.title ?? 'Карта'}
+            <button
+              type="button"
+              onClick={scrollToMap}
+              className="hidden hover:text-white sm:inline transition-colors"
+            >
+              {dict?.mainPage?.mapSection?.title ?? 'Карта'}
             </button>
           </div>
           <div className="flex items-center gap-4">
@@ -94,7 +95,7 @@ export default function Header() {
               rel="noopener noreferrer"
               className="text-neutral-400 transition-colors hover:text-white"
             >
-              CDO
+              Ebilim
             </Link>
           </div>
         </Container>
@@ -105,11 +106,15 @@ export default function Header() {
           href={`/${lang}`}
           className="flex min-w-0 max-w-[min(100%,10.5rem)] shrink items-center gap-2 sm:max-w-[12rem] sm:gap-3 md:max-w-[14rem] md:gap-4 xl:max-w-[min(100%,18rem)]"
         >
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-accent-soft)] md:h-12 md:w-12">
-            <img src="/atk-logo.png" alt="" className="h-8 w-8 object-contain md:h-9 md:w-9" />
+          <div className="flex h-[2.4rem] w-[2.4rem] shrink-0 items-center justify-center md:h-[2.7rem] md:w-[2.7rem]">
+            <img
+              src="/atk-logo.png"
+              alt=""
+              className="h-[2.4rem] w-[2.4rem] object-contain md:h-[2.7rem] md:w-[2.7rem]"
+            />
           </div>
           <span
-            className="hidden min-w-0 text-[12px] font-medium leading-snug text-neutral-800 sm:text-[13px] md:block md:line-clamp-2 md:break-words xl:text-sm"
+            className="hidden min-w-0 text-[12px] font-medium leading-tight text-neutral-800 sm:text-[13px] md:block md:line-clamp-2 md:break-words xl:text-sm"
             dangerouslySetInnerHTML={{ __html: dict?.header?.slogan || 'ATK' }}
           />
         </Link>

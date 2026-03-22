@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
+from django.conf import settings
 from django.core.mail import send_mail
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -13,10 +14,8 @@ from drf_yasg import openapi
 
 from django.db.models import Q
 from apps.education.models import *
-from apps.events.models import *
 from apps.news.models import *
 from apps.education.serializers import *
-from apps.events.serializers import *
 from apps.news.serializers import *
 from .models import *
 from .serializers import *
@@ -89,15 +88,6 @@ class LecturerViewSet(ModelViewSet):
     search_fields = ["name", "age", "bio", "subject"]
     filterset_fields = ["name", "age", "bio", "subject"]
 
-class SampleViewSet(ModelViewSet):
-    queryset = Sample.objects.all()
-    serializer_class = SampleSerializer
-    permission_classes = (AllowAny, )
-    filter_backends = [filters.DjangoFilterBackend, SearchFilter]
-    search_fields = ["title", "description"]
-    filterset_fields = ["title", "description"]
-
-
 @method_decorator(csrf_exempt, name="dispatch")
 class Sending(APIView):
     permission_classes = (AllowAny,)
@@ -113,13 +103,15 @@ class Sending(APIView):
                     {"error": "Получатель почты не настроен в админке (Email_sending)."},
                     status=503,
                 )
+            # Отправитель SMTP (Gmail и др.) должен совпадать с авторизованным EMAIL_HOST_USER
+            from_addr = settings.EMAIL_HOST_USER or receiver.receiver
             send_mail(
                 subject="Question from Student: " + serializer.validated_data["name"],
                 message="Вопрос: "
                 + serializer.validated_data["info_text"]
                 + "\n почта для ответа: "
                 + serializer.validated_data["email"],
-                from_email=receiver.receiver,
+                from_email=from_addr,
                 recipient_list=[receiver.receiver],
             )
             return Response({"message": "success"}, status=200)
@@ -155,11 +147,6 @@ class GlobalSearchView(APIView):
             Q(title__icontains=query) | Q(type__icontains=query)
         )
         results["images_for_multimedia"] = (Images_for_multimediaSerializer(images_for_multimedia_results, many=True, context={'request': request}).data)
-    
-        sample_results = Sample.objects.filter(
-            Q(title__icontains=query) | Q(description__icontains=query)
-        )
-        results["sample"] = (SampleSerializer(sample_results, many=True, context={'request': request}).data)
 
         Courses_programms_results = Courses_programms.objects.filter(
             Q(title__icontains=query) | Q(description__icontains=query) | Q(duration__icontains=query) | Q(mini_description__icontains=query) | Q(price__icontains=query) | Q(type__icontains=query)
@@ -170,5 +157,15 @@ class GlobalSearchView(APIView):
             Q(name__icontains=query) | Q(age__icontains=query) | Q(bio__icontains=query) | Q(subject__icontains=query)
         )
         results["lecturer"] = (LecturerSerializer(Lecturer_results, many=True, context={'request': request}).data)
+
+        faq_results = FAQ.objects.filter(
+            Q(question__icontains=query) | Q(answer__icontains=query)
+        )
+        results["faq"] = (FAQSerializer(faq_results, many=True, context={'request': request}).data)
+
+        sertificate_results = Sertificate.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+        results["sertificates"] = (SertificatesSerializer(sertificate_results, many=True, context={'request': request}).data)
 
         return Response(results)

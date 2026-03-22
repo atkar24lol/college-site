@@ -8,12 +8,6 @@ class Admission_dateSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class Scholorship_grantSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Scholorship_grant
-        fields = "__all__"
-
-
 class Courses_programmsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Courses_programms

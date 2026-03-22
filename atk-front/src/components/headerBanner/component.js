@@ -197,7 +197,7 @@ const Header = () => {
 
     return (<div className='w-full'>
         {/*3*/}
-        <div className={`${path === `/${lang}/site-map` || path === `/${lang}/contacts` ? 'hidden' : 'flex'} header w-full overflow-y-hidden p-[80px] xl:px-[40px] lg:px-[20px] md:px-[20px] sm:px-[20px] pt-[100px] xl:pt-[70px] lg:pt-[50px] md:pt-[40px] sm:pt-[20px] pb-[120px] xl:pb-[100px] lg:pb-[80px] md:pb-[20px] sm:pb-[20px] md:min-h-[460px] sm:min-h-[250px] flex flex-col gap-[2.5px] md:gap-4 sm:gap-1 justify-start items-center md:items-start sm:items-start relative`}>
+        <div className={`${path === `/${lang}/contacts` ? 'hidden' : 'flex'} header w-full overflow-y-hidden p-[80px] xl:px-[40px] lg:px-[20px] md:px-[20px] sm:px-[20px] pt-[100px] xl:pt-[70px] lg:pt-[50px] md:pt-[40px] sm:pt-[20px] pb-[120px] xl:pb-[100px] lg:pb-[80px] md:pb-[20px] sm:pb-[20px] md:min-h-[460px] sm:min-h-[250px] flex flex-col gap-[2.5px] md:gap-4 sm:gap-1 justify-start items-center md:items-start sm:items-start relative`}>
             <div
                 className="bg-cover bg-center bg-no-repeat  shadow-xl"
                 style={{

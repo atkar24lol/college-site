@@ -1,6 +1,13 @@
 {
   "download": "download",
   "callback": "Feedback",
+  "electronLibraryPage": {
+    "empty": "No sample documents have been published yet."
+  },
+  "searchPage": {
+    "queryLabel": "Query:",
+    "empty": "No results found."
+  },
   "header": {
     "searchField": "Search...",
     "slogan": "Agrotechnical College<br>named after<br>Sultan Ibraimov",
@@ -66,7 +73,6 @@
       "electronicLibrary": "Electronic Library",
       "internationalCooperation": "International Cooperation",
       "rewards": "Awards",
-      "siteMap": "Site Map",
       "educationalPortal": "Educational Portal",
       "address": "68, Mederova, Bishkek",
       "phone": "+996 312 575407"
@@ -79,6 +85,7 @@
       "noNewsYet": "No news yet."
     },
     "mapSection": {
+      "title": "Map",
       "description": "Interactive map: zoom and the college location in the city."
     },
 
@@ -317,24 +324,6 @@
       }
     },
     "maintext": "## Open to the World\n\nThe Sultan Ibraimov Agrotechnical College is a leader in vocational education in Kyrgyzstan and is actively integrating into the international educational space. It was one of the first colleges to establish partnerships with foreign organizations, enabling the modernization of the learning environment and the implementation of international educational standards.\n\n## Key Areas of International Cooperation\n\n### Educational Programs and Projects\n\n- **Germany (2006)** – In collaboration with the Weihenstephan University of Applied Sciences, a program in \"Entrepreneurship in Agriculture\" was developed according to European standards.\n- **Finland (since 2014)** – The University of Eastern Finland supports the development of ichthyology and fish farming. The college has established an Aquaculture Center, a water laboratory, and a training fish farm, developed courses, and trained teachers.\n- **Japan (since 2018)** – Cooperation with the Agricultural School of Shihoro (JICA). New products based on local resources (e.g., sea buckthorn oatmeal cookies) have been developed, and practical agricultural education programs have been improved. In 2023, a Memorandum was signed with Iwatani School in Japan for student exchange and academic cooperation.\n- **Kazakhstan (2023)** – A Memorandum with Ushkonur College on joint training of specialists in dual education.\n\n### Infrastructure Projects\n\n- **USA (2003-2005)** – The American Mercy Corps helped equip the college with furniture and educational equipment.\n- **OSCE (2011)** – \"Water Quality in Kyrgyzstan\" project, under which the college received a mobile chemical laboratory from the Japanese Embassy.\n- **Asia (2015-2018)** – The Asian Development Bank’s \"Vocational Education\" project. The college established modern laboratories for \"Hydrotechnical Construction\" and \"Veterinary\" specialties.\n- **Saudi Arabia (2023)** – Participation in a project to improve vocational education infrastructure, including major repairs and laboratory equipment.\n\n## The Future of International Cooperation\n\nThe college continues to expand international ties, implement innovative educational methodologies, and improve infrastructure, opening new opportunities for students.\n\n✨ The journey of discovery continues…\n"
-  },
-  "siteMap": {
-    "atk": "About ATC",
-    "invite": "Admission",
-    "educationWithAtk": "Education at ATC",
-    "main": "Main Page",
-    "content": "Articles and Content",
-    "multimedia": "Multimedia",
-    "contacts": "Contact Information",
-    "feedback": "Feedback Forms",
-    "entrants": "For Entrants",
-    "students": "For Students",
-    "educationActivity": "Educational Activity",
-    "gallary": "Gallery",
-    "aboutTeachers": "About Teachers",
-    "blogAndNews": "Blog and News Feed",
-    "questionParrents": "Parent Questions",
-    "teachers": "For Teachers"
   },
   "additionalEducation": {
     "catalog": {

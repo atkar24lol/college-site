@@ -4,7 +4,7 @@ import { ClientPageTitle } from '@/components/ui/ClientPageTitle';
 import { API } from '@/requester';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export default function SearchResult({ dict }) {
   const [data, setData] = useState(null);
@@ -22,10 +22,25 @@ export default function SearchResult({ dict }) {
     load();
   }, [load]);
 
+  const hasResults = useMemo(() => {
+    if (!data) return false;
+    return Boolean(
+      data.news?.length ||
+        data.images_for_multimedia?.length ||
+        data.courses_and_programms?.length ||
+        data.lecturer?.length ||
+        data.faq?.length ||
+        data.sertificates?.length
+    );
+  }, [data]);
+
+  const q = decodeURIComponent(String(value));
+
   return (
     <ClientPageTitle dict={dict}>
       <p className="mb-8 text-sm text-neutral-600">
-        Запрос: <span className="font-medium text-neutral-900">{decodeURIComponent(String(value))}</span>
+        {dict?.searchPage?.queryLabel ?? 'Запрос:'}{' '}
+        <span className="font-medium text-neutral-900">{q}</span>
       </p>
 
       {data?.news?.length ? (
@@ -77,7 +92,7 @@ export default function SearchResult({ dict }) {
       ) : null}
 
       {data?.courses_and_programms?.length ? (
-        <section>
+        <section className="mb-10">
           <h2 className="text-sm font-semibold text-neutral-900">{dict?.footer?.list?.additionalEducation}</h2>
           <ul className="mt-3 space-y-2">
             {data.courses_and_programms.map((c) => (
@@ -94,8 +109,72 @@ export default function SearchResult({ dict }) {
         </section>
       ) : null}
 
-      {data && !data.news?.length && !data.images_for_multimedia?.length && !data.courses_and_programms?.length ? (
-        <p className="text-sm text-neutral-500">Ничего не найдено.</p>
+      {data?.lecturer?.length ? (
+        <section className="mb-10">
+          <h2 className="text-sm font-semibold text-neutral-900">{dict?.header?.list?.teachers}</h2>
+          <ul className="mt-3 space-y-2">
+            {data.lecturer.map((l) => (
+              <li key={l.id}>
+                <Link
+                  href={`/${lang}/teachers/${l.id}`}
+                  className="flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-3 text-sm hover:border-neutral-300"
+                >
+                  {l.avatar ? (
+                    <img src={l.avatar} alt="" className="h-12 w-12 shrink-0 rounded-full object-cover" />
+                  ) : (
+                    <div className="h-12 w-12 shrink-0 rounded-full bg-neutral-100" />
+                  )}
+                  <span className="font-medium text-neutral-800">{l[`name_${lang}`] || l.name}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {data?.faq?.length ? (
+        <section className="mb-10">
+          <h2 className="text-sm font-semibold text-neutral-900">{dict?.entrants?.faq?.title}</h2>
+          <ul className="mt-3 space-y-2">
+            {data.faq.map((item) => (
+              <li key={item.id}>
+                <Link
+                  href={`/${lang}/entrants`}
+                  className="block rounded-lg border border-neutral-200 bg-white p-3 text-sm hover:border-neutral-300"
+                >
+                  {item[`question_${lang}`] || item.question}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {data?.sertificates?.length ? (
+        <section className="mb-10">
+          <h2 className="text-sm font-semibold text-neutral-900">{dict?.awards?.title}</h2>
+          <ul className="mt-3 space-y-2">
+            {data.sertificates.map((s) => (
+              <li key={s.id}>
+                <Link
+                  href={`/${lang}/awards`}
+                  className="flex items-center gap-3 rounded-lg border border-neutral-200 bg-white p-3 text-sm hover:border-neutral-300"
+                >
+                  {s.image ? (
+                    <img src={s.image} alt="" className="h-14 w-20 shrink-0 rounded object-cover" />
+                  ) : (
+                    <div className="h-14 w-20 shrink-0 rounded bg-neutral-100" />
+                  )}
+                  <span>{s[`title_${lang}`] || s.title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {data && !hasResults ? (
+        <p className="text-sm text-neutral-500">{dict?.searchPage?.empty ?? 'Ничего не найдено.'}</p>
       ) : null}
     </ClientPageTitle>
   );

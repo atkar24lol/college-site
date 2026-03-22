@@ -2,7 +2,6 @@ from modeltranslation.translator import register, TranslationOptions
 
 from apps.education.models import (
     Admission_date,
-    Scholorship_grant,
     Schedule,
     Courses_programms,
     LectureMaterialsSection,
@@ -12,10 +11,6 @@ from apps.education.models import (
 
 @register(Admission_date)
 class Admission_dateModelTranslation(TranslationOptions):
-    fields = ("title", "description")
-
-@register(Scholorship_grant)
-class Scholorship_grantModelTranslation(TranslationOptions):
     fields = ("title", "description")
 
 

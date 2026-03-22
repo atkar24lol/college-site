@@ -29,7 +29,6 @@ export default function Footer() {
     ],
     [
       { name: dict?.footer?.list?.internationalCooperation, href: `/${lang}/international-cooperation` },
-      { name: dict?.footer?.list?.siteMap, href: `/${lang}/site-map` },
       { name: dict?.footer?.list?.contactInformation, href: `/${lang}/contacts` },
       { name: dict?.footer?.list?.rewards, href: `/${lang}/awards` },
     ],

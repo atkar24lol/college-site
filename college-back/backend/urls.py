@@ -16,6 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+import backend.admin_site  # noqa: F401 — заголовки админки
+
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
@@ -39,7 +42,6 @@ schema_view = get_schema_view(
 api_urlpatterns = [
     path('abouts/', include('apps.abouts.urls')),
     path('education/', include('apps.education.urls')),
-    path('events/', include('apps.events.urls')),
     path('news/', include('apps.news.urls')),
 ]
 

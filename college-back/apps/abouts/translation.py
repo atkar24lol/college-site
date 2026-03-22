@@ -6,7 +6,6 @@ from apps.abouts.models import (
     Contact_information,
     FAQ,
     Sertificate,
-    Sample,
     Images_for_multimedia,
     Block_of_contact,
     Lecturer,
@@ -43,7 +42,3 @@ class Block_of_contactModelTranslation(TranslationOptions):
 @register(Lecturer)
 class LecturerModelTranslation(TranslationOptions):
     fields = ("name", "bio", "subject")
-
-@register(Sample)
-class SampleModelTranslation(TranslationOptions):
-    fields = ("title", "description",)

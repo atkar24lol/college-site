@@ -1,13 +1,13 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from django.db import IntegrityError
 from modeltranslation.admin import TranslationAdmin
 
-from apps.news.models import (
-    News,
-    Main_page_news
-)
+import apps.news.translation  # noqa: F401 — регистрация переводов до TranslationAdmin
+
+from apps.news.models import News
 
 
 class DuplicateActionAdminMixin:
@@ -44,18 +44,36 @@ class DuplicateActionAdminMixin:
     actions = ["duplicate_selected"]
 
 
-@admin.register(Main_page_news)
-class Main_page_newsAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "news_1", "news_2", "news_3", "news_4"]
-
-    def has_add_permission(self, request):
-        count = Main_page_news.objects.count()
-        if count == 0:
-            return True
-        return False
-
-
 @admin.register(News)
-class NewsAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "description", "image", "date"]
+class NewsAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
 
+    list_display = ["id", "title", "date", "preview_image"]
+    list_filter = ["date"]
+    search_fields = ["title", "description"]
+    date_hierarchy = "date"
+    ordering = ["-date"]
+
+    fieldsets = (
+        (
+            _("Публикация"),
+            {"fields": ("date", "image")},
+        ),
+        (
+            _("Тексты (переводы по вкладкам: русский / English / кыргызча)"),
+            {"fields": ("title", "description")},
+        ),
+    )
+
+    @admin.display(description="Превью")
+    def preview_image(self, obj):
+        if not obj.image:
+            return "—"
+        try:
+            url = obj.image.url
+        except Exception:
+            return "—"
+        return format_html(
+            '<img src="{}" width="44" height="44" style="object-fit:cover;border-radius:4px" alt="" />',
+            url,
+        )

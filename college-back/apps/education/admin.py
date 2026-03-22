@@ -8,7 +8,6 @@ import apps.education.translation  # noqa: F401 — регистрация пе�
 
 from apps.education.models import (
     Admission_date,
-    Scholorship_grant,
     Schedule,
     Courses_programms,
     LectureMaterialsSection,
@@ -49,18 +48,23 @@ class DuplicateActionAdminMixin:
 
     actions = ["duplicate_selected"]
 
+
 @admin.register(Admission_date)
-class Admission_dateAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "event_date", "description"]
-
-
-@admin.register(Scholorship_grant)
-class Scholorship_grantAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "type"]
+class Admission_dateAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
+    list_display = ["id", "title", "event_date"]
+    date_hierarchy = "event_date"
+    ordering = ["-event_date"]
+    fieldsets = (
+        (_("Дата и время"), {"fields": ("event_date",)}),
+        (_("Тексты (переводы по языкам)"), {"fields": ("title", "description")}),
+    )
 
 
 @admin.register(Courses_programms)
 class Courses_programmsAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
+
     list_display = [
         "id",
         "sort_order",
@@ -72,20 +76,67 @@ class Courses_programmsAdmin(DuplicateActionAdminMixin, TranslationAdmin):
     ]
     list_filter = ["show_on_additional_education", "show_on_international", "type"]
     ordering = ["sort_order", "id"]
+    search_fields = ["title", "description", "mini_description", "category"]
+
+    fieldsets = (
+        (
+            _("Где показывать на сайте"),
+            {
+                "fields": (
+                    "sort_order",
+                    "type",
+                    "show_on_additional_education",
+                    "show_on_international",
+                ),
+                "description": _(
+                    "Галочки разделяют каталог «Дополнительное образование» и блок «Международное сотрудничество»."
+                ),
+            },
+        ),
+        (
+            _("Каталог: поля без перевода"),
+            {
+                "fields": ("price", "image"),
+            },
+        ),
+        (
+            _("Каталог: переводы (русский / EN / KY по вкладкам)"),
+            {
+                "fields": (
+                    "title",
+                    "category",
+                    "study_format",
+                    "start_info",
+                    "duration",
+                    "mini_description",
+                    "description",
+                ),
+            },
+        ),
+    )
 
 
 @admin.register(Schedule)
-class ScheduleAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = [
-        "id",
-        "title",
-        "file",
-    ]
+class ScheduleAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
+    list_display = ["id", "title", "file"]
+    fieldsets = (
+        (_("Файл"), {"fields": ("file",)}),
+        (_("Название (переводы по языкам)"), {"fields": ("title",)}),
+    )
 
 
 @admin.register(LectureMaterialsSection)
 class LectureMaterialsSectionAdmin(TranslationAdmin):
+    group_fieldsets = True
     list_display = ["id", "section_title"]
+
+    fieldsets = (
+        (
+            _("Тексты для страницы «Преподавателям» (переводы по языкам)"),
+            {"fields": ("section_title", "aside_note")},
+        ),
+    )
 
     def has_add_permission(self, request):
         return not LectureMaterialsSection.objects.exists()
@@ -93,5 +144,21 @@ class LectureMaterialsSectionAdmin(TranslationAdmin):
 
 @admin.register(LecturePreparationMaterial)
 class LecturePreparationMaterialAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    group_fieldsets = True
     list_display = ["id", "sort_order", "title", "file", "link"]
-    exclude = ("button_text",)
+    ordering = ["sort_order", "id"]
+
+    fieldsets = (
+        (_("Порядок"), {"fields": ("sort_order",)}),
+        (
+            _("Заголовок и описание (переводы по языкам)"),
+            {"fields": ("title", "description", "button_text")},
+        ),
+        (
+            _("Файл или внешняя ссылка"),
+            {
+                "fields": ("file", "link"),
+                "description": _("Заполните файл **или** ссылку — не оба, если так задумано на сайте."),
+            },
+        ),
+    )
