@@ -10,11 +10,6 @@ router.register(
     basename='admission-dates'
 )
 router.register(
-    prefix='specialtie',
-    viewset=SpecialtieViewSet,
-    basename='specialtie'
-)
-router.register(
     prefix='scholorships-grants',
     viewset=Scholorship_grantViewSet,
     basename='scholorships-grants'
@@ -32,5 +27,10 @@ router.register(
 
 
 urlpatterns = [
-    path("", include(router.urls))
+    path("", include(router.urls)),
+    path(
+        'lecture-materials/bundle/',
+        LectureMaterialsBundleView.as_view(),
+        name='lecture-materials-bundle',
+    ),
 ]

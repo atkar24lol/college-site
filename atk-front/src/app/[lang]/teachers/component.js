@@ -1,150 +1,272 @@
-"use client"
+'use client';
 
-import { ClientPageTitle } from '@/components/ui/ClientPageTitle'
-import React, { useCallback, useEffect, useState } from 'react'
-import "./styles.css"
-import { Pagination } from '@mui/material'
-import InfoMiniBox from '@/components/infoMiniBox/component'
-import { API } from '@/requester'
-import { useParams } from 'next/navigation'
+import { ClientPageTitle } from '@/components/ui/ClientPageTitle';
+import { absoluteMediaUrl } from '@/lib/mediaUrl';
+import { API } from '@/requester';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-const Teachers = ({ dict }) => {
-  const [plans, setPlans] = useState([])
-  const [plansProps, setPlansProps] = useState({
-    search: '',
-    page: 1,
-    pageSize: 3,
-    order: 1,
-    count: 0,
-  });
+function Section({ id, title, description, children, className = '' }) {
+  return (
+    <section
+      id={id}
+      className={`border-b border-[var(--color-border)] bg-[var(--color-surface)] py-14 md:py-16 ${className}`}
+    >
+      <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10">
+        {title ? (
+          <header className="mb-10 md:mb-12">
+            <h2 className="text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
+              {title}
+            </h2>
+            {description ? (
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-neutral-600">{description}</p>
+            ) : null}
+          </header>
+        ) : null}
+        {children}
+      </div>
+    </section>
+  );
+}
 
-  const { lang } = useParams()
+function ScheduleRow({ item, lang, downloadLabel }) {
+  const title = item?.[`title_${lang}`] ?? item?.title ?? '';
+  const fileUrl = absoluteMediaUrl(item?.file);
 
-  const handleChangePage = (e, page) => {
-    setPlansProps((prevValue) => ({
-      ...prevValue,
-      page: page,
-    }));
-  };
+  return (
+    <div className="flex flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-white px-5 py-4 shadow-soft sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+      <h3 className="min-w-0 flex-1 text-base font-semibold leading-snug text-neutral-900">{title}</h3>
+      {fileUrl ? (
+        <a
+          href={fileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          download
+          className="shrink-0 text-sm font-semibold text-[var(--color-accent)] underline-offset-2 hover:underline"
+        >
+          {downloadLabel}
+        </a>
+      ) : (
+        <span className="shrink-0 text-sm text-neutral-400">—</span>
+      )}
+    </div>
+  );
+}
 
-  const handleGetPlans = useCallback(async () => {
-    const { data } = await API.get('education/schedule', {
-      params: { page: plansProps.page, page_size: plansProps.pageSize },
-    })
-    setPlans(data?.results ?? [])
-    setPlansProps((prev) => ({ ...prev, count: data?.count ?? 0 }))
-  }, [plansProps.page, plansProps.pageSize])
+function MaterialCard({ title, description, fileUrl, href, downloadLabel }) {
+  const cta = fileUrl ? (
+    <a
+      href={fileUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      download
+      className="mt-4 inline-block text-sm font-semibold text-[var(--color-accent)] underline-offset-2 hover:underline"
+    >
+      {downloadLabel}
+    </a>
+  ) : href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-4 inline-block text-sm font-semibold text-[var(--color-accent)] underline-offset-2 hover:underline"
+    >
+      {downloadLabel}
+    </a>
+  ) : null;
+
+  return (
+    <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)] bg-white p-6 shadow-soft">
+      <h3 className="text-sm font-semibold leading-snug text-neutral-900 md:text-base">{title}</h3>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600">{description}</p>
+      {cta}
+    </div>
+  );
+}
+
+function PagePagination({ page, pageCount, onChange }) {
+  if (pageCount <= 1) return null;
+  return (
+    <nav className="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
+      <button
+        type="button"
+        disabled={page <= 1}
+        onClick={() => onChange(page - 1)}
+        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-800 transition hover:border-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
+        aria-label="Предыдущая страница"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <span className="min-w-[120px] text-center text-sm tabular-nums text-neutral-600">
+        {page} / {pageCount}
+      </span>
+      <button
+        type="button"
+        disabled={page >= pageCount}
+        onClick={() => onChange(page + 1)}
+        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-800 transition hover:border-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-40"
+        aria-label="Следующая страница"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+    </nav>
+  );
+}
+
+const MATERIAL_KEYS = ['materialOne', 'materialTwo', 'materialThree', 'materialFour'];
+
+function pickLocalized(obj, lang, base) {
+  if (!obj) return '';
+  return obj[`${base}_${lang}`] ?? obj[base] ?? '';
+}
+
+export default function Teachers({ dict }) {
+  const { lang } = useParams();
+  const [plans, setPlans] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [lectureBundle, setLectureBundle] = useState(null);
+  const pageSize = 6;
+
+  const pageCount = Math.max(1, Math.ceil(totalCount / pageSize) || 1);
+
+  const loadPlans = useCallback(async () => {
+    try {
+      const { data } = await API.get('education/schedule', {
+        params: { page, page_size: pageSize },
+      });
+      setPlans(data?.results ?? []);
+      setTotalCount(data?.count ?? 0);
+    } catch {
+      setPlans([]);
+      setTotalCount(0);
+    }
+  }, [page, pageSize]);
 
   useEffect(() => {
-    handleGetPlans()
-  }, [handleGetPlans])
+    loadPlans();
+  }, [loadPlans]);
 
-  const materials = [
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.teachers?.materials?.materialOne?.title,
-      description: dict?.teachers?.materials?.materialOne?.description,
-      button: dict?.teachers?.materials?.materialOne?.buttonText,
-    },
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.teachers?.materials?.materialTwo?.title,
-      description: dict?.teachers?.materials?.materialTwo?.description,
-      button: dict?.teachers?.materials?.materialTwo?.buttonText,
-    },
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await API.get('education/lecture-materials/bundle/');
+        if (!cancelled) setLectureBundle(data);
+      } catch {
+        if (!cancelled) setLectureBundle({ section: null, items: [] });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.teachers?.materials?.materialThree?.title,
-      description: dict?.teachers?.materials?.materialThree?.description,
-      button: dict?.teachers?.materials?.materialThree?.buttonText,
-    },
+  const materialsFromDict = useMemo(() => {
+    const m = dict?.teachers?.materials;
+    if (!m) return [];
+    return MATERIAL_KEYS.map((key) => {
+      const block = m[key];
+      if (!block?.title) return null;
+      return {
+        key,
+        title: block.title,
+        description: block.description,
+        fileUrl: '',
+        href: '',
+      };
+    }).filter(Boolean);
+  }, [dict]);
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.teachers?.materials?.materialFour?.title,
-      description: dict?.teachers?.materials?.materialFour?.description,
-      button: dict?.teachers?.materials?.materialFour?.buttonText,
-    },
+  const useApiMaterials = Boolean(lectureBundle?.items?.length);
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.teachers?.materials?.materialFour?.title,
-      description: dict?.teachers?.materials?.materialFour?.description,
-      button: dict?.teachers?.materials?.materialFour?.buttonText,
-    },
+  const materialCards = useMemo(() => {
+    if (!useApiMaterials) return materialsFromDict;
+    return lectureBundle.items.map((item) => {
+      const rawFile = item.file;
+      const fileUrl =
+        rawFile && String(rawFile).trim()
+          ? String(rawFile).startsWith('http')
+            ? String(rawFile).trim()
+            : absoluteMediaUrl(rawFile)
+          : '';
+      return {
+        key: `api-${item.id}`,
+        title: pickLocalized(item, lang, 'title'),
+        description: pickLocalized(item, lang, 'description'),
+        fileUrl,
+        href: item.link ? String(item.link).trim() : '',
+      };
+    });
+  }, [useApiMaterials, lectureBundle, materialsFromDict, lang]);
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.teachers?.materials?.materialFour?.title,
-      description: dict?.teachers?.materials?.materialFour?.description,
-      button: dict?.teachers?.materials?.materialFour?.buttonText,
-    },
-  ]
+  const materialsSectionTitle = useMemo(() => {
+    const fallback = dict?.teachers?.materials?.title;
+    if (!useApiMaterials) return fallback;
+    const raw = pickLocalized(lectureBundle.section, lang, 'section_title');
+    return raw || fallback;
+  }, [useApiMaterials, lectureBundle, lang, dict]);
+
+  const materialsAside = useMemo(() => {
+    const fallback = dict?.teachers?.materials?.asideNote;
+    if (!useApiMaterials) return fallback;
+    const raw = pickLocalized(lectureBundle.section, lang, 'aside_note');
+    return raw || fallback;
+  }, [useApiMaterials, lectureBundle, lang, dict]);
+
+  const plansIntro = dict?.header?.previews?.descriptions?.teachers;
+  const downloadLabel = dict?.download || 'скачать';
+  const emptyPlans = dict?.teachers?.emptyPlans;
 
   return (
     <ClientPageTitle dict={dict}>
-    <div className='w-full h-auto min-h-screen flex flex-col gap-8 py-10 learning-plan-box'>
-      <div className='flex flex-col justify-between gap-[15px]'>
-        <p className='font-[800] text-[34px] text-[#000] text-center'>{dict?.teachers?.title}</p>
-
-        <div className='flex gap-[30px] py-8 xl:justify-center xxl:justify-center justify-between sm:justify-center md:justify-center w-full flex-wrap'>
-          {plans?.map((predmet, index) => (
-            <div key={index} className='flex sm:items-center flex-col relative xl:items-center justify-evenly shadow-xl'>
-              <div className={`w-[320px] min-h-[310px] h-auto p-[25px] flex flex-col justify-between items-center rounded-[5px] shadow-lg`}
-              >
-                <img src={predmet?.image} alt={predmet?.title} className='w-full h-[196px]' />
-
-                <p className='font-[700] text-[20px] text-[#0072BC] text-center pt-[45px]'>{predmet?.[`title_${lang}`]}</p>
-
-                <div className='absolute translate-y-[170%] rounded-lg bg-white shadow-sm w-[86px] h-[86px] flex justify-center items-center mission-box-icon'>
-                  <img src='/teacher-react-icon.svg' alt={predmet?.title} />
-                </div>
-                <a href={predmet?.file} download={predmet?.[`title_${lang}`]}>
-                  <button
-                    className="cursor-pointer hover:underline pt-4"
-                  >
-                    {dict?.download}
-                  </button>
-                </a>
-
+      <div className="bg-[var(--color-bg)]">
+        <Section title={dict?.teachers?.title} description={plansIntro}>
+          {plans.length > 0 ? (
+            <>
+              <div className="space-y-3">
+                {plans.map((item, index) => (
+                  <ScheduleRow
+                    key={item.id ?? `${String(item.file)}-${index}`}
+                    item={item}
+                    lang={lang}
+                    downloadLabel={downloadLabel}
+                  />
+                ))}
               </div>
-            </div>
-          ))}
-        </div>
+              <PagePagination page={page} pageCount={pageCount} onChange={setPage} />
+            </>
+          ) : (
+            <p className="text-sm text-neutral-500">{emptyPlans}</p>
+          )}
+        </Section>
 
-        <div
-          className={'w-full flex justify-center items-center py-6'}
-        >
-          <Pagination
-            variant="outlined"
-            shape="rounded"
-            onChange={handleChangePage}
-            page={plansProps?.page}
-            count={Math.ceil(plansProps.count / plansProps.pageSize) || 1}
-            showFirstButton
-            showLastButton
-            siblingCount={2}
-          />
-        </div>
-
-        <div className='pt-[53px] pb-[55px]'>
-          <div className='flex flex-wrap xl:gap-0 gap-7 justify-start xl:justify-center xxl:justify-center w-full min-h-[450px]'>
-            <div className='flex border-[1px] border-[#0072BC] flex-col p-[22px] xl:w-[30%] xxl:w-[40%] xxl:items-center w-full'>
-              <img src='/college-value-preview.png' className='w-full h-[320px] pb-5' />
-              <p className='font-[800] text-[34px] md:text-[24px] sm:text-[20px] text-[#000]'>{dict?.teachers?.materials?.title}</p>
-            </div>
-
-            <div className='xl:w-[70%] px-4 w-full md:pt-4 sm:pt-4 justify-center flex-wrap sm:flex-col flex gap-4 items-center'>{materials?.map((item, index) => (
-              <InfoMiniBox item={item} key={index} />
-            ))}</div>
+        <Section title={materialsSectionTitle}>
+          {materialsAside ? (
+            <p className="mb-8 max-w-2xl text-sm leading-relaxed text-neutral-600">{materialsAside}</p>
+          ) : null}
+          <div className="grid gap-5 sm:grid-cols-2">
+            {materialCards.map((item) => (
+              <MaterialCard
+                key={item.key}
+                title={item.title}
+                description={item.description}
+                fileUrl={item.fileUrl}
+                href={item.href}
+                downloadLabel={downloadLabel}
+              />
+            ))}
           </div>
-        </div>
+          <Link
+            href={`/${lang}/contacts#feedback`}
+            className="mt-8 inline-flex rounded-full border-2 border-neutral-900 px-6 py-2.5 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+          >
+            {dict?.callback || 'Контакты'}
+          </Link>
+        </Section>
       </div>
-    </div>
     </ClientPageTitle>
-  )
+  );
 }
-
-export default Teachers
-

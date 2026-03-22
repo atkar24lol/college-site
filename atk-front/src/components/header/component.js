@@ -75,7 +75,7 @@ export default function Header() {
   const isActive = (href) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="sticky top-0 z-50 bg-[var(--color-surface)] shadow-nav">
+    <header className="sticky top-0 z-50 overflow-x-hidden bg-[var(--color-surface)] shadow-nav">
       {/* Верхняя панель — как у Compass: контакты + вторичные действия */}
       <div className="border-b border-neutral-200/80 bg-[#1c1917] text-[13px] text-neutral-300">
         <Container className="flex h-10 items-center justify-between">
@@ -100,25 +100,31 @@ export default function Header() {
         </Container>
       </div>
 
-      <Container className="flex h-[4.5rem] items-center justify-between gap-6">
-        <Link href={`/${lang}`} className="flex min-w-0 shrink-0 items-center gap-3 md:gap-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-accent-soft)] md:h-12 md:w-12">
+      <Container className="flex h-[4.5rem] min-w-0 max-w-full items-center gap-2 sm:gap-3 md:gap-4">
+        <Link
+          href={`/${lang}`}
+          className="flex min-w-0 max-w-[min(100%,10.5rem)] shrink items-center gap-2 sm:max-w-[12rem] sm:gap-3 md:max-w-[14rem] md:gap-4 xl:max-w-[min(100%,18rem)]"
+        >
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-accent-soft)] md:h-12 md:w-12">
             <img src="/atk-logo.png" alt="" className="h-8 w-8 object-contain md:h-9 md:w-9" />
           </div>
           <span
-            className="hidden max-w-[14rem] text-[13px] font-medium leading-snug text-neutral-800 md:block lg:max-w-xs lg:text-sm"
+            className="hidden min-w-0 text-[12px] font-medium leading-snug text-neutral-800 sm:text-[13px] md:block md:line-clamp-2 md:break-words xl:text-sm"
             dangerouslySetInnerHTML={{ __html: dict?.header?.slogan || 'ATK' }}
           />
         </Link>
 
-        {/* Десктоп: от lg (1024px) и выше — стандартные breakpoints Tailwind */}
-        <nav className="hidden items-center gap-8 lg:flex xl:gap-10" aria-label="Main">
+        {/* Полная навигация только от xl — ниже кнопка «Меню» */}
+        <nav
+          className="hidden min-w-0 flex-1 flex-nowrap items-center justify-center gap-x-4 xl:flex xl:gap-x-6 2xl:gap-x-8"
+          aria-label="Main"
+        >
           {navPrimary.map((item) =>
             item.label ? (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`nav-link ${isActive(item.href) ? 'nav-link-active' : ''}`}
+                className={`nav-link shrink-0 whitespace-nowrap ${isActive(item.href) ? 'nav-link-active' : ''}`}
               >
                 {item.label}
               </Link>
@@ -126,31 +132,31 @@ export default function Header() {
           )}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2 md:gap-3">
-          <form onSubmit={submitSearch} className="hidden items-center md:flex">
-            <div className="flex h-10 items-center rounded-full border border-neutral-200 bg-neutral-50 pl-4 pr-1 transition-shadow focus-within:border-[var(--color-accent)] focus-within:ring-2 focus-within:ring-[var(--color-accent-soft)]">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <form onSubmit={submitSearch} className="hidden min-w-0 items-center xl:flex">
+            <div className="flex h-10 max-w-full items-center rounded-full border border-neutral-200 bg-neutral-50 pl-3 pr-1 transition-shadow focus-within:border-[var(--color-accent)] focus-within:ring-2 focus-within:ring-[var(--color-accent-soft)] sm:pl-4">
               <input
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={dict?.header?.searchField || 'Поиск…'}
-                className="w-32 border-0 bg-transparent text-sm text-neutral-800 outline-none placeholder:text-neutral-400 lg:w-40"
+                className="w-[6.5rem] min-w-0 flex-1 border-0 bg-transparent text-sm text-neutral-800 outline-none placeholder:text-neutral-400 sm:w-28 xl:w-36"
               />
               <button
                 type="submit"
-                className="rounded-full bg-[var(--color-accent)] px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-[var(--color-accent-hover)]"
+                className="shrink-0 rounded-full bg-[var(--color-accent)] px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-[var(--color-accent-hover)] sm:px-4"
               >
                 OK
               </button>
             </div>
           </form>
 
-          <div className="flex h-10 items-center rounded-full border border-neutral-200 bg-white px-1">
+          <div className="flex h-10 shrink-0 items-center rounded-full border border-neutral-200 bg-white px-0.5 sm:px-1">
             <select
               aria-label="Language"
               value={lang}
               onChange={(e) => switchLang(e.target.value)}
-              className="cursor-pointer border-0 bg-transparent py-1 pl-2 pr-8 text-xs font-bold uppercase tracking-wider text-neutral-800 outline-none"
+              className="max-w-[5.5rem] cursor-pointer border-0 bg-transparent py-1 pl-1.5 pr-6 text-[11px] font-bold uppercase tracking-wider text-neutral-800 outline-none sm:max-w-none sm:pl-2 sm:pr-7 sm:text-xs"
             >
               {LANGS.map((l) => (
                 <option key={l.code} value={l.code}>
@@ -162,7 +168,7 @@ export default function Header() {
 
           <button
             type="button"
-            className="flex h-10 items-center rounded-full border border-neutral-900 px-4 text-xs font-bold uppercase tracking-wider text-neutral-900 lg:hidden"
+            className="flex h-10 shrink-0 items-center rounded-full border border-neutral-900 px-2.5 text-[11px] font-bold uppercase tracking-wider text-neutral-900 sm:px-3 sm:text-xs xl:hidden"
             onClick={() => setMobileOpen((v) => !v)}
             aria-expanded={mobileOpen}
             aria-label="Меню"
@@ -173,7 +179,7 @@ export default function Header() {
       </Container>
 
       <nav
-        className="hidden border-t border-neutral-100 bg-[#fafaf9] lg:block"
+        className="hidden border-t border-neutral-100 bg-[#fafaf9] xl:block"
         aria-label="Secondary"
       >
         <Container className="flex flex-wrap gap-x-8 gap-y-2 py-2.5">
@@ -194,7 +200,7 @@ export default function Header() {
       </nav>
 
       {mobileOpen && (
-        <div className="border-t border-neutral-200 bg-white lg:hidden">
+        <div className="border-t border-neutral-200 bg-white xl:hidden">
           <Container className="flex flex-col gap-1 py-4">
             <form onSubmit={submitSearch} className="mb-3 flex gap-2">
               <input

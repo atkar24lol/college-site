@@ -1,7 +1,11 @@
+# Регистрация modeltranslation должна выполниться до импорта TranslationAdmin и autodiscover.
+import apps.abouts.translation  # noqa: F401, E402
+
 from django.contrib import admin
 from django.contrib import messages
-from django.utils.translation import gettext_lazy as _
 from django.db import IntegrityError
+from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 
 from apps.abouts.models import (
@@ -72,19 +76,63 @@ class Contact_informationAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(Sertificate)
-class SertificateAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "description", "image"]
+class SertificateAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    list_display = ["id", "sort_order", "section", "title", "image"]
+    list_filter = ["section"]
+    sortable_by = ["sort_order", "id"]
 
 
 @admin.register(Images_for_multimedia)
 class Images_for_multimediaAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
     list_display = [
         "id",
-        "title",
-        "image",
+        "type",
+        "preview_thumb",
+        "title_ru",
         "link",
-        "type"
+        "video_file",
     ]
+    list_filter = ["type"]
+    search_fields = ["title_ru", "title_ky", "title_en"]
+    fieldsets = (
+        (
+            _("Тип"),
+            {"fields": ("type",)},
+        ),
+        (
+            _("Название (переводы)"),
+            {"fields": ("title_ru", "title_ky", "title_en")},
+        ),
+        (
+            _("Изображение / постер"),
+            {
+                "fields": ("image",),
+                "description": _(
+                    "Обязательно для типа «Фото». "
+                    "Для «Видео» можно загрузить постер или оставить пустым."
+                ),
+            },
+        ),
+        (
+            _("Видео"),
+            {
+                "fields": ("link", "video_file"),
+                "description": _(
+                    "Только для типа «Видео»: вставьте ссылку на ролик YouTube/Vimeo "
+                    "или загрузите файл MP4/WebM. Не заполняйте ссылку и файл одновременно."
+                ),
+            },
+        ),
+    )
+
+    @admin.display(description=_("Превью"))
+    def preview_thumb(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="56" height="40" style="object-fit:cover;border-radius:4px" alt="" />',
+                obj.image.url,
+            )
+        return "—"
 
 
 @admin.register(Contact)

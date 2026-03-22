@@ -1,26 +1,26 @@
-.swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.swiper {
+/* Swiper: вписываем в сетку главной, без фиксированных 390px */
+.gallery-swiper {
   width: 100%;
-  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.swiper-slide {
-  width: 390px;
-  margin-bottom: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.gallery-swiper .swiper-slide {
+  height: auto;
+  box-sizing: border-box;
 }
 
-.swiper-pagination {
-  width: 100%;
+.gallery-swiper .swiper-pagination {
+  bottom: 0;
 }
 
-.swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
+.gallery-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #d4d4d4;
+  opacity: 1;
+}
+
+.gallery-swiper .swiper-pagination-bullet-active {
+  background: var(--color-accent);
 }

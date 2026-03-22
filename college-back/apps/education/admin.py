@@ -4,12 +4,15 @@ from django.db import IntegrityError
 from django.utils.translation import gettext_lazy as _
 from modeltranslation.admin import TranslationAdmin
 
+import apps.education.translation  # noqa: F401 — регистрация переводов до TranslationAdmin
+
 from apps.education.models import (
     Admission_date,
-    Specialtie,
     Scholorship_grant,
     Schedule,
-    Courses_programms
+    Courses_programms,
+    LectureMaterialsSection,
+    LecturePreparationMaterial,
 )
 
 
@@ -51,18 +54,24 @@ class Admission_dateAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
     list_display = ["id", "title", "event_date", "description"]
 
 
-@admin.register(Specialtie)
-class SpecialtieAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "description", "study_time", "type", "budget", ]
-
 @admin.register(Scholorship_grant)
 class Scholorship_grantAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
     list_display = ["id", "title", "type"]
 
 
 @admin.register(Courses_programms)
-class Courses_programmsAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
-    list_display = ["id", "title", "description", "duration", "mini_description", "price", "type"]
+class Courses_programmsAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    list_display = [
+        "id",
+        "sort_order",
+        "title",
+        "category",
+        "price",
+        "show_on_additional_education",
+        "show_on_international",
+    ]
+    list_filter = ["show_on_additional_education", "show_on_international", "type"]
+    ordering = ["sort_order", "id"]
 
 
 @admin.register(Schedule)
@@ -72,3 +81,17 @@ class ScheduleAdmin(DuplicateActionAdminMixin, admin.ModelAdmin):
         "title",
         "file",
     ]
+
+
+@admin.register(LectureMaterialsSection)
+class LectureMaterialsSectionAdmin(TranslationAdmin):
+    list_display = ["id", "section_title"]
+
+    def has_add_permission(self, request):
+        return not LectureMaterialsSection.objects.exists()
+
+
+@admin.register(LecturePreparationMaterial)
+class LecturePreparationMaterialAdmin(DuplicateActionAdminMixin, TranslationAdmin):
+    list_display = ["id", "sort_order", "title", "file", "link"]
+    exclude = ("button_text",)

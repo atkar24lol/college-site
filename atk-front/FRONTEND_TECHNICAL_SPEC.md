@@ -156,7 +156,6 @@ atk-front/
 | `education/courses-programms?page=N` | Международное сотрудничество |
 | `education/courses-programms/{id}/` | Деталь программы |
 | `education/admission-dates` | Даты приёма |
-| `education/specialtie?page=N` | Специальности (абитуриентам) |
 | `education/schedule?page=N` | Расписание (преподавателям) |
 
 Медиа-URL с бэкенда могут быть относительными — при необходимости дополнять базовым URL медиа-сервера.

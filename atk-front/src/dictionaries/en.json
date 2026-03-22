@@ -75,7 +75,11 @@
   "mainPage": {
     "mainNews": {
       "title": "News",
-      "link": "All News"
+      "link": "All News",
+      "noNewsYet": "No news yet."
+    },
+    "mapSection": {
+      "description": "Interactive map: zoom and the college location in the city."
     },
 
     "mainInfoBlock": {
@@ -117,7 +121,20 @@
   },
   "awards": {
     "title": "Awards",
-    "description": "College awards and certificates"
+    "description": "College awards and certificates",
+    "hallOfFame": {
+      "title": "Hall of fame",
+      "lead": "Awards and achievements we are especially proud of."
+    },
+    "partners": {
+      "title": "Thanks and certificates from partners",
+      "lead": "Recognition from organizations and partners of the college."
+    },
+    "general": {
+      "title": "Other awards and certificates",
+      "lead": ""
+    },
+    "empty": "No items have been published yet."
   },
   "blogAndNews": {
     "titles": {
@@ -189,6 +206,7 @@
   },
   "teachers": {
     "title": "Class Schedules",
+    "emptyPlans": "Documents will be published later.",
     "button": "Learn More",
     "age": "Age",
     "details": {
@@ -198,6 +216,7 @@
     },
     "materials": {
       "title": "Materials for Preparing Lectures",
+      "asideNote": "Methodological materials and references for class preparation.",
       "materialOne": {
         "title": "Material 1",
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -223,10 +242,14 @@
   "gallary": {
     "titleImages": "Photos",
     "titleVideos": "Videos",
-    "titleImagesGraduates": "Graduates Gallery"
+    "empty": "No media in this section yet.",
+    "openPhoto": "Open photo",
+    "closeLightbox": "Close"
   },
   "contacts": {
     "title": "Contacts",
+    "subtitle": "For admissions and partnership inquiries, please use the contacts below.",
+    "formTitle": "Feedback",
     "addressLabel": "Address",
     "rector": "Rector",
     "rectorData": "A.S. Pushkin",
@@ -314,6 +337,18 @@
     "teachers": "For Teachers"
   },
   "additionalEducation": {
+    "catalog": {
+      "intro": "Catalog of additional education programs: browse topics and details.",
+      "foundPrefix": "Found:",
+      "foundSuffix": "programs",
+      "empty": "No programs published yet.",
+      "format": "Format",
+      "start": "Intake / dates",
+      "audienceStudent": "For students / attendees",
+      "audienceLecturer": "For teaching staff",
+      "back": "Back to catalog",
+      "currency": "KGS"
+    },
     "coursesAndPrograms": {
       "title": "All Courses and Programs",
       "duration": "Duration",
@@ -356,6 +391,7 @@
     "dateReception": {
       "title": "Reception Dates"
     },
+    "emptyDates": "Admission dates will be published later.",
     "admissionProcedures": {
       "title": "Admission Procedures",
       "blockOne": {
@@ -383,14 +419,9 @@
         "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
       }
     },
-    "specializations": {
-      "title": "Specializations",
-      "format": "Study Format:",
-      "long": "Study Duration:",
-      "contract": "Study Contract:"
-    },
     "faq": {
-      "title": "Frequently Asked Questions"
+      "title": "Frequently Asked Questions",
+      "lead": "If you did not find an answer, contact us via the form on the contacts page."
     }
   }
 }

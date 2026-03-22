@@ -79,7 +79,11 @@ const InternatonalCooperation = ({ dict }) => {
 
         const handleGetPrograms = useCallback(async () => {
         const { data } = await API.get('education/courses-programms', {
-            params: { page: programsProps.page, page_size: programsProps.pageSize },
+            params: {
+                page: programsProps.page,
+                page_size: programsProps.pageSize,
+                show_on_international: true,
+            },
         });
         setPrograms(data?.results ?? []);
         setProgramsProps((prev) => ({ ...prev, count: data?.count ?? 0 }));

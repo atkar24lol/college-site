@@ -1,0 +1,7 @@
+{
+  "name": "college-site",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix atk-front"
+  }
+}

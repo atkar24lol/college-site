@@ -1,210 +1,287 @@
-"use client"
+'use client';
 
-import { ClientPageTitle } from '@/components/ui/ClientPageTitle'
-import InfoMiniBox from '@/components/infoMiniBox/component'
-import PrioretyEntrantsBlock from '@/components/prioretyEntrantsBlock/component'
-import PrioretyEntrantsDate from '@/components/prioretyEntrantsDate/component'
-import { API } from '@/requester'
-import { useParams } from 'next/navigation'
-import React, { useCallback, useEffect, useState } from 'react'
-import "./styles.css"
-import Specialization from '@/components/specialization/component'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { ClientPageTitle } from '@/components/ui/ClientPageTitle';
+import { dateLocaleForLang } from '@/lib/locale';
+import { API } from '@/requester';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import 'swiper/css';
-import 'swiper/css/pagination';
+function Section({ id, title, description, children, className = '' }) {
+  return (
+    <section
+      id={id}
+      className={`border-b border-[var(--color-border)] bg-[var(--color-surface)] py-14 md:py-16 ${className}`}
+    >
+      <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10">
+        {title ? (
+          <header className="mb-10 md:mb-12">
+            <h2 className="text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
+              {title}
+            </h2>
+            {description ? (
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-neutral-600">{description}</p>
+            ) : null}
+          </header>
+        ) : null}
+        {children}
+      </div>
+    </section>
+  );
+}
 
-import { Navigation } from 'swiper/modules';
-import { Accordion, AccordionDetails, AccordionSummary, IconButton, Pagination } from '@mui/material'
-import { ArrowDropDownRounded, KeyboardArrowDownRounded } from '@mui/icons-material'
+function PriorityCard({ lines, imageSrc, imageAlt, reverse }) {
+  return (
+    <div className="grid gap-10 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 shadow-soft md:grid-cols-2 md:items-center md:gap-12 md:p-10">
+      <div className={`min-w-0 space-y-4 ${reverse ? 'md:order-2' : ''}`}>
+        {lines.map((line, i) => (
+          <p
+            key={i}
+            className={
+              i === 0
+                ? 'text-xl font-semibold leading-snug text-[var(--color-accent)] md:text-2xl'
+                : 'text-sm leading-relaxed text-neutral-600 md:text-base'
+            }
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+      <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-100 shadow-inner ${reverse ? 'md:order-1' : ''}`}>
+        <Image src={imageSrc} alt={imageAlt || ''} fill className="object-cover" sizes="(max-width:768px) 100vw, 45vw" />
+      </div>
+    </div>
+  );
+}
 
-const Entrants = ({ dict }) => {
-  const [prioretyDate, setPrioretyDate] = useState([])
-  const [specializations, setSpecializations] = useState([])
-  const [faq, setFaqs] = useState([])
-  const [specializationsProps, setSpecializationsProps] = useState({
-    search: '',
-    page: 1,
-    pageSize: 3,
-    order: 1,
-    count: 0,
-  });
+function AdmissionDateCard({ data, lang, dateLocale }) {
+  const title = data?.[`title_${lang}`];
+  const description = data?.[`description_${lang}`];
+  const raw = data?.event_date;
+  const d = raw ? new Date(raw) : null;
+  const valid = d && !Number.isNaN(d.getTime());
+  const year = valid ? d.getFullYear() : null;
+  const dateLine = valid
+    ? d.toLocaleDateString(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' })
+    : null;
 
-  const { lang } = useParams()
+  return (
+    <article className="flex min-h-[220px] flex-col justify-between rounded-2xl border border-[var(--color-border)] bg-white p-6 shadow-soft">
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          {year ? (
+            <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">{year}</p>
+          ) : null}
+          <h3 className="mt-1 text-lg font-semibold leading-snug text-neutral-900">{title}</h3>
+          {dateLine ? (
+            <p className="mt-3 text-sm font-medium text-[var(--color-accent)]">{dateLine}</p>
+          ) : null}
+        </div>
+        <div className="relative h-10 w-10 shrink-0 opacity-90">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/calendar-preview.svg" alt="" width={40} height={40} className="h-10 w-10 object-contain" />
+        </div>
+      </div>
+      {description ? (
+        <p className="mt-4 text-sm leading-relaxed text-neutral-600">{description}</p>
+      ) : null}
+    </article>
+  );
+}
 
-  const handleChangePage = (e, page) => {
-    setSpecializationsProps((prevValue) => ({
-      ...prevValue,
-      page: page,
-    }));
-  };
+function ProcedureStep({ index, title, description, iconSrc }) {
+  return (
+    <div className="flex flex-col rounded-2xl border border-[var(--color-border)] bg-white p-6 shadow-soft transition hover:border-neutral-300">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-accent-soft)]">
+        <Image src={iconSrc} alt="" width={32} height={48} className="object-contain" />
+      </div>
+      <p className="mt-4 text-xs font-bold uppercase tracking-wider text-[var(--color-accent)]">
+        {index + 1}. {title}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-neutral-600">{description}</p>
+    </div>
+  );
+}
 
-  const admissionProcedures = [
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.entrants?.admissionProcedures?.blockOne?.title,
-      description: dict?.entrants?.admissionProcedures?.blockOne?.description,
-    },
+function FaqItem({ question, answer }) {
+  return (
+    <details className="group rounded-2xl border border-[var(--color-border)] bg-white shadow-soft open:ring-1 open:ring-[var(--color-accent-soft)]">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left text-base font-semibold text-neutral-900 marker:content-none [&::-webkit-details-marker]:hidden">
+        <span>{question}</span>
+        <span className="shrink-0 text-neutral-400 transition group-open:rotate-180" aria-hidden>
+          ▼
+        </span>
+      </summary>
+      <div className="border-t border-[var(--color-border)] px-5 pb-5 pt-3 text-sm leading-relaxed text-neutral-600">
+        {answer}
+      </div>
+    </details>
+  );
+}
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.entrants?.admissionProcedures?.blockTwo?.title,
-      description: dict?.entrants?.admissionProcedures?.blockTwo?.description,
-    },
+export default function Entrants({ dict }) {
+  const { lang } = useParams();
+  const dateLocale = dateLocaleForLang(lang);
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.entrants?.admissionProcedures?.blockThree?.title,
-      description: dict?.entrants?.admissionProcedures?.blockThree?.description,
-    },
+  const [dates, setDates] = useState([]);
+  const [faq, setFaq] = useState([]);
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.entrants?.admissionProcedures?.blockFour?.title,
-      description: dict?.entrants?.admissionProcedures?.blockFour?.description,
-    },
+  const loadDates = useCallback(async () => {
+    try {
+      const { data } = await API.get('education/admission-dates', { params: { page_size: 100 } });
+      setDates(Array.isArray(data) ? data : data?.results ?? []);
+    } catch {
+      setDates([]);
+    }
+  }, []);
 
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.entrants?.admissionProcedures?.blockFive?.title,
-      description: dict?.entrants?.admissionProcedures?.blockFive?.description,
-    },
-
-    {
-      image: '/education-route-icon.svg',
-      title: dict?.entrants?.admissionProcedures?.blockSix?.title,
-      description: dict?.entrants?.admissionProcedures?.blockSix?.description,
-    },
-  ]
-
-  const handleGetPrioretyDates = useCallback(async () => {
-    const { data } = await API.get('education/admission-dates', { params: { page_size: 100 } })
-    setPrioretyDate(Array.isArray(data) ? data : data?.results ?? [])
-  }, [])
-
-  const handleGetSpecializations = useCallback(async () => {
-    const { data } = await API.get('education/specialtie', {
-      params: { page: specializationsProps.page, page_size: specializationsProps.pageSize },
-    })
-    setSpecializations(data?.results ?? [])
-    setSpecializationsProps((prev) => ({ ...prev, count: data?.count ?? 0 }))
-  }, [specializationsProps.page, specializationsProps.pageSize])
-
-  const handleGetFaqs = useCallback(async () => {
-    const { data } = await API.get('abouts/faq', { params: { page_size: 100 } })
-    setFaqs(Array.isArray(data) ? data : data?.results ?? [])
-  }, [])
+  const loadFaq = useCallback(async () => {
+    try {
+      const { data } = await API.get('abouts/faq', { params: { page_size: 100 } });
+      setFaq(Array.isArray(data) ? data : data?.results ?? []);
+    } catch {
+      setFaq([]);
+    }
+  }, []);
 
   useEffect(() => {
-    handleGetPrioretyDates()
-    handleGetSpecializations()
-    handleGetFaqs()
-  }, [handleGetPrioretyDates, handleGetSpecializations, handleGetFaqs])
+    loadDates();
+  }, [loadDates]);
+
+  useEffect(() => {
+    loadFaq();
+  }, [loadFaq]);
+
+  const blockOneLines = useMemo(
+    () =>
+      [
+        dict?.entrants?.prioretyInformation?.blockOne?.title,
+        dict?.entrants?.prioretyInformation?.blockOne?.textOne,
+        dict?.entrants?.prioretyInformation?.blockOne?.textTwo,
+        dict?.entrants?.prioretyInformation?.blockOne?.textThree,
+        dict?.entrants?.prioretyInformation?.blockOne?.textFour,
+        dict?.entrants?.prioretyInformation?.blockOne?.textFive,
+      ].filter(Boolean),
+    [dict]
+  );
+
+  const blockTwoLines = useMemo(
+    () =>
+      [
+        dict?.entrants?.prioretyInformation?.blockTwo?.title,
+        dict?.entrants?.prioretyInformation?.blockTwo?.textOne,
+        dict?.entrants?.prioretyInformation?.blockTwo?.textTwo,
+        dict?.entrants?.prioretyInformation?.blockTwo?.textThree,
+        dict?.entrants?.prioretyInformation?.blockTwo?.textFour,
+        dict?.entrants?.prioretyInformation?.blockTwo?.textFive,
+      ].filter(Boolean),
+    [dict]
+  );
+
+  const procedures = useMemo(
+    () => [
+      dict?.entrants?.admissionProcedures?.blockOne,
+      dict?.entrants?.admissionProcedures?.blockTwo,
+      dict?.entrants?.admissionProcedures?.blockThree,
+      dict?.entrants?.admissionProcedures?.blockFour,
+      dict?.entrants?.admissionProcedures?.blockFive,
+      dict?.entrants?.admissionProcedures?.blockSix,
+    ].filter((b) => b?.title),
+    [dict]
+  );
+
+  const priAlt = dict?.entrants?.prioretyInformation?.blockOne?.title || '';
 
   return (
     <ClientPageTitle dict={dict}>
-    <div className='w-full flex flex-col items-center'>
-      <div className='w-full max-w-6xl h-auto min-h-screen py-10 sm:py-12 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-between'>
-        <PrioretyEntrantsBlock dict={dict} />
-        <div className='w-full flex flex-col justify-between gap-[30px]   text-center'>
-          <p className='font-[800] text-[#000] text-[34px] md:text-[20px] sm:text-[18px]'>{dict?.entrants?.dateReception?.title}</p>
+      <div className="bg-[var(--color-bg)]">
+        {/* Важная информация */}
+        <Section title={dict?.entrants?.prioretyInformation?.title}>
+          <div className="space-y-10">
+            {blockOneLines.length > 0 ? (
+              <PriorityCard
+                lines={blockOneLines}
+                imageSrc="/entrants-priorety-preview.png"
+                imageAlt={priAlt}
+                reverse={false}
+              />
+            ) : null}
+            {blockTwoLines.length > 0 ? (
+              <PriorityCard
+                lines={blockTwoLines}
+                imageSrc="/entrants-priorety-preview.png"
+                imageAlt={priAlt}
+                reverse
+              />
+            ) : null}
+          </div>
+        </Section>
 
-          <div className='w-full flex justify-evenly items-center gap-4 flex-wrap'>
-            {prioretyDate?.map((data, index) => (
-              <PrioretyEntrantsDate data={data} key={index} />
+        {/* Сроки приёмной */}
+        <Section title={dict?.entrants?.dateReception?.title}>
+          {dates.length > 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {dates.map((item) => (
+                <AdmissionDateCard key={item.id} data={item} lang={lang} dateLocale={dateLocale} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-neutral-500">{dict?.entrants?.emptyDates || 'Даты будут объявлены позже.'}</p>
+          )}
+        </Section>
+
+        {/* Этапы поступления */}
+        <Section title={dict?.entrants?.admissionProcedures?.title}>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {procedures.map((item, index) => (
+              <ProcedureStep
+                key={item.title + String(index)}
+                index={index}
+                title={item.title}
+                description={item.description}
+                iconSrc="/education-route-icon.svg"
+              />
             ))}
           </div>
+        </Section>
 
-          <div className="w-full flex flex-col py-[50px] md:py-[30px] sm:py-4 gap-10 md:gap-6 sm:gap-3">
-            <p className='font-[800] text-[#000] text-[34px] md:text-[20px] sm:text-[18px]'>{dict?.entrants?.admissionProcedures?.title}</p>
-
-            <div className='px-[100px] md:px-[40px] sm:px-4 flex w-full justify-between items-center flex-wrap gap-10'>
-              {
-                admissionProcedures?.map((item, index) => (
-                  <InfoMiniBox className='block' item={item} index={index} key={index} />
-                ))
-              }
-            </div>
-          </div>
-
-          <div className='w-full flex flex-col gap-20 items-center'>
-
-
-            {specializations && specializations?.length > 0 && (
-              <div className='flex w-full gap-5 flex-col justify-evenly items-center'>
-                <p className='font-[800] text-[#000] text-[34px] md:text-[20px] sm:text-[18px]'>{dict?.entrants?.specializations?.title}</p>
-
-                <div className='w-full flex gap-8 flex-wrap justify-center items-center'>
-
-                  {specializations?.map((route) => (
-                    <Specialization key={route.id} dict={dict} route={route} />
-                  ))}
+        {/* FAQ */}
+        <section className="border-b border-[var(--color-border)] bg-[var(--color-bg)] py-14 md:py-16">
+          <div className="mx-auto max-w-[1200px] px-5 sm:px-8 lg:px-10">
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+              <div className="lg:col-span-5">
+                <h2 className="text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
+                  {dict?.entrants?.faq?.title}
+                </h2>
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-neutral-600">
+                  {dict?.entrants?.faq?.lead ||
+                    'Если не нашли ответ — напишите через форму на странице контактов.'}
+                </p>
+                <Link
+                  href={`/${lang}/contacts#feedback`}
+                  className="mt-6 inline-flex rounded-full border-2 border-neutral-900 px-6 py-2.5 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-900 hover:text-white"
+                >
+                  {dict?.callback || 'Контакты'}
+                </Link>
+                <div className="relative mx-auto mt-10 hidden aspect-[4/3] max-w-sm lg:block">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/faq-preview.svg" alt="" className="h-full w-full object-contain" />
                 </div>
               </div>
-            )}
-
-            <div
-              className={'w-full flex justify-center items-center py-6'}
-            >
-              <Pagination
-                variant="outlined"
-                shape="rounded"
-                onChange={handleChangePage}
-                page={specializationsProps?.page}
-                count={Math.ceil(specializationsProps.count / specializationsProps.pageSize) || 1}
-                showFirstButton
-                showLastButton
-                siblingCount={2}
-              />
-            </div>
-          </div>
-
-          <div className='w-full flex md:flex-wrap sm:flex-wrap sm:gap-4 justify-between py-[100px] md:py-[40px] sm:py-6'>
-            <div className='w-1/2 md:w-full sm:w-full flex flex-col justify-start gap-[50px]'>
-              <p className='font-[800] text-[45px] md:text-[30px] sm:text-[20px] text-[#042442] max-w-1/2'>{dict?.entrants?.faq?.title}</p>
-
-              <div className='w-full flex flex-col gap-[25px]'>
-                {faq?.map((quest, index) => (
-                  <Accordion
-                    square='false'
-                    sx={{ borderRadius: '40px', border: "none", }}
-                    key={index}
-                    className='faq-block bg-white p-[10px] accordion'
-
-                  >
-                    <AccordionSummary
-                      expandIcon={<KeyboardArrowDownRounded />}
-                      sx={{
-                        borderBottom: '1px solid transparent',
-                        '&.Mui-expanded': {
-                          borderBottom: '1px solid transparent',
-                        },
-                      }}
-                      className='accordion'
-                    >
-                      <p className='font-[700] text-[16px] text-[#042442]'>
-                        {quest?.[`question_${lang}`]}
-                      </p>
-                    </AccordionSummary>
-                    <AccordionDetails className='accordion'>
-                      <div className='w-full flex justify-start items-center'>
-                        <span className='tracking-[1px] font-[600] whitespace-normal break-words max-w-full text-[14px] text-[#042442]'>
-                          {quest?.[`answer_${lang}`]}
-                        </span>
-                      </div>
-                    </AccordionDetails>
-                  </Accordion>
+              <div className="space-y-3 lg:col-span-7">
+                {faq.map((item, index) => (
+                  <FaqItem
+                    key={item.id ?? index}
+                    question={item?.[`question_${lang}`]}
+                    answer={item?.[`answer_${lang}`]}
+                  />
                 ))}
               </div>
             </div>
-            <img src='/faq-preview.svg' className='w-1/2 md:w-full sm:w-full h-full' />
           </div>
-        </div>
+        </section>
       </div>
-    </div>
     </ClientPageTitle>
-  )
+  );
 }
-
-export default Entrants
-

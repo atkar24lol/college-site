@@ -4,7 +4,7 @@ import L from 'leaflet';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Map = () => {
+const Map = ({ ariaLabel = 'Карта' }) => {
   const position = [42.852111, 74.605192];
   const point = [42.851718, 74.605004];
 
@@ -24,7 +24,7 @@ const Map = () => {
   // }, [handleGetPoints]);
 
   return (
-    <div className="w-full">
+    <div className="w-full" role="region" aria-label={ariaLabel}>
       <MapContainer
         className="z-10 h-[320px] w-full md:h-[400px]"
         center={position}

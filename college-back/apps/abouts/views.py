@@ -2,6 +2,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter
@@ -52,7 +54,7 @@ class SertificateViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
     filter_backends = [filters.DjangoFilterBackend, SearchFilter]
     search_fields = ["title", "description"]
-    filterset_fields = ["title", "description"]
+    filterset_fields = ["title", "description", "section"]
 
 
 class Images_for_multimediaViewSet(ModelViewSet):
@@ -96,19 +98,29 @@ class SampleViewSet(ModelViewSet):
     filterset_fields = ["title", "description"]
 
 
+@method_decorator(csrf_exempt, name="dispatch")
 class Sending(APIView):
-    @swagger_auto_schema(request_body=SendingSerializer,
-                        responses={200: "Question was sent"})
+    permission_classes = (AllowAny,)
+
+    @swagger_auto_schema(request_body=SendingSerializer, responses={200: "Question was sent"})
     def post(self, request, *args, **kwargs):
         try:
-            data = SendingSerializer(data=request.data)
-            data.is_valid()
-            receiver = Email_sending.objects.all().first()
+            serializer = SendingSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            receiver = Email_sending.objects.first()
+            if not receiver:
+                return Response(
+                    {"error": "Получатель почты не настроен в админке (Email_sending)."},
+                    status=503,
+                )
             send_mail(
-                subject="Question from Student: " + data.validated_data["name"],
-                message="Вопрос: " + data.validated_data['info_text'] + "\n почта для ответа: " + data.validated_data["email"],
+                subject="Question from Student: " + serializer.validated_data["name"],
+                message="Вопрос: "
+                + serializer.validated_data["info_text"]
+                + "\n почта для ответа: "
+                + serializer.validated_data["email"],
                 from_email=receiver.receiver,
-                recipient_list=[receiver.receiver, ], #TODO change to univer email
+                recipient_list=[receiver.receiver],
             )
             return Response({"message": "success"}, status=200)
         except Exception as e:
@@ -144,11 +156,6 @@ class GlobalSearchView(APIView):
         )
         results["images_for_multimedia"] = (Images_for_multimediaSerializer(images_for_multimedia_results, many=True, context={'request': request}).data)
     
-        Specialtie_results = Specialtie.objects.filter(
-            Q(title__icontains=query) | Q(description__icontains=query) | Q(type__icontains=query) | Q(budget__icontains=query)
-        )
-        results["specialtie"] = (SpecialtieSerializer(Specialtie_results, many=True, context={'request': request}).data)
-
         sample_results = Sample.objects.filter(
             Q(title__icontains=query) | Q(description__icontains=query)
         )

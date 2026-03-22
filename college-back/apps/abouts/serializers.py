@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from .models import *
+from .utils import normalize_video_embed_url
 
 class Email_sendingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,8 +32,22 @@ class SertificatesSerializer(serializers.ModelSerializer):
         model = Sertificate
         fields = "__all__"
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        request = self.context.get("request")
+        if instance.image:
+            image_url = instance.image.url
+            if request and not str(image_url).startswith("http"):
+                image_url = request.build_absolute_uri(image_url)
+            representation["image"] = image_url
+        else:
+            representation["image"] = None
+        return representation
+
 
 class Images_for_multimediaSerializer(serializers.ModelSerializer):
+    """API: image / video_file — абсолютные URL; embed_url — для iframe по ссылке YouTube/Vimeo."""
+
     class Meta:
         model = Images_for_multimedia
         fields = "__all__"
@@ -39,11 +55,28 @@ class Images_for_multimediaSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         request = self.context.get('request')
-        if request:
+
+        if instance.image:
             image_url = instance.image.url
-            if not image_url.startswith('http'):
+            if request and not str(image_url).startswith('http'):
                 image_url = request.build_absolute_uri(image_url)
             representation['image'] = image_url
+        else:
+            representation['image'] = None
+
+        if instance.video_file:
+            vf = instance.video_file.url
+            if request and not str(vf).startswith('http'):
+                vf = request.build_absolute_uri(vf)
+            representation['video_file'] = vf
+        else:
+            representation['video_file'] = None
+
+        if instance.type == Images_for_multimedia.TypeChoice.video and instance.link:
+            representation['embed_url'] = normalize_video_embed_url(instance.link)
+        else:
+            representation['embed_url'] = None
+
         return representation
 
 

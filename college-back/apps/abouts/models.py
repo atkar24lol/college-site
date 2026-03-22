@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.timezone import now
 
@@ -23,20 +24,80 @@ class Contact_information(models.Model):
 
 
 class Sertificate(models.Model):
+    class Section(models.TextChoices):
+        general = "general", "Прочие награды"
+        hall_of_fame = "hall_of_fame", "В зале славы"
+        partners = "partners", "Благодарности и грамоты партнёрам"
+
+    section = models.CharField(
+        max_length=32,
+        choices=Section.choices,
+        default=Section.general,
+        verbose_name="Раздел на странице «Награды»",
+    )
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок в разделе")
     image = models.FileField(verbose_name='Картинка', upload_to='sertificates')
     title = models.CharField(max_length=255, verbose_name='Название', null=True, blank=True)
     description = models.TextField(verbose_name="Описание")
 
+    class Meta:
+        ordering = ["section", "sort_order", "id"]
+
 
 class Images_for_multimedia(models.Model):
     class TypeChoice(models.TextChoices):
-        graduates = "graduates"
-        video = "video"
         picture = "picture"
-    image = models.FileField(verbose_name='Картинка', upload_to='images_for_multimedia')
+        video = "video"
+
+    image = models.FileField(
+        verbose_name='Изображение / превью',
+        upload_to='images_for_multimedia',
+        null=True,
+        blank=True,
+        help_text='Обязательно для типа «Фото». Для «Видео» — по желанию (постер).',
+    )
     title = models.CharField(max_length=255, verbose_name='Название', null=True, blank=True)
-    link = models.URLField(max_length=500, verbose_name='Ссылка на видео')
+    link = models.URLField(
+        max_length=500,
+        verbose_name='Ссылка на видео',
+        null=True,
+        blank=True,
+        help_text='YouTube или Vimeo: вставьте обычную ссылку на ролик — на сайте откроется плеер.',
+    )
+    video_file = models.FileField(
+        verbose_name='Видеофайл',
+        upload_to='videos_multimedia',
+        null=True,
+        blank=True,
+        help_text='Альтернатива ссылке: MP4 или WebM с сервера (до нескольких сотен МБ).',
+    )
     type = models.CharField(max_length=20, choices=TypeChoice.choices, verbose_name="Тип")
+
+    class Meta:
+        verbose_name = 'Мультимедиа (фото / видео)'
+        verbose_name_plural = 'Мультимедиа (фото / видео)'
+
+    def clean(self):
+        super().clean()
+        t = self.type
+        if t == self.TypeChoice.picture:
+            if not self.image:
+                raise ValidationError({'image': 'Для фото загрузите изображение.'})
+        if t == self.TypeChoice.video:
+            has_link = bool(self.link and str(self.link).strip())
+            has_file = bool(self.video_file)
+            if not has_link and not has_file:
+                raise ValidationError(
+                    'Для видео укажите ссылку на YouTube/Vimeo или загрузите видеофайл (MP4/WebM).'
+                )
+            if has_link and has_file:
+                raise ValidationError(
+                    'Укажите либо ссылку на видео, либо файл — не оба варианта одновременно.'
+                )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
 
 class Contact(models.Model):

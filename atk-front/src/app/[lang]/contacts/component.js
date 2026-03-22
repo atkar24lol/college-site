@@ -9,6 +9,12 @@ import { useCallback, useEffect, useState } from 'react';
 export default function Contacts({ dict }) {
   const [contacts, setContacts] = useState([]);
   const { lang } = useParams();
+  const fb = dict?.contacts?.feedback;
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [infoText, setInfoText] = useState('');
+  const [status, setStatus] = useState('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const load = useCallback(async () => {
     try {
@@ -25,9 +31,44 @@ export default function Contacts({ dict }) {
     load();
   }, [load]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined' || window.location.hash !== '#feedback') return;
+    const t = setTimeout(() => {
+      document.getElementById('feedback')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+    return () => clearTimeout(t);
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMessage('');
+    try {
+      await API.post('abouts/sending/', {
+        name: name.trim(),
+        email: email.trim(),
+        info_text: infoText.trim(),
+      });
+      setStatus('success');
+      setName('');
+      setEmail('');
+      setInfoText('');
+    } catch (err) {
+      setStatus('error');
+      const d = err?.response?.data;
+      let msg = '';
+      if (d && typeof d === 'object') {
+        msg = d.error || d.detail || (Array.isArray(d) ? d.join(', ') : JSON.stringify(d));
+      } else if (typeof d === 'string') {
+        msg = d;
+      }
+      setErrorMessage(msg);
+    }
+  };
+
   return (
     <ClientPageTitle dict={dict}>
-      <div id="form" className="scroll-mt-24">
+      <div className="mb-12">
         <p className="mb-8 text-sm text-neutral-600">
           {dict?.contacts?.subtitle ||
             'По вопросам поступления и сотрудничества обращайтесь по указанным контактам.'}
@@ -48,7 +89,10 @@ export default function Contacts({ dict }) {
                 <p className="mt-3 text-sm text-neutral-600">{c.contact}</p>
               ) : null}
               {c?.email ? (
-                <Link href={`mailto:${c.email}`} className="mt-2 inline-block text-sm text-[var(--color-accent)] hover:underline">
+                <Link
+                  href={`mailto:${c.email}`}
+                  className="mt-2 inline-block text-sm text-[var(--color-accent)] hover:underline"
+                >
                   {c.email}
                 </Link>
               ) : null}
@@ -56,6 +100,88 @@ export default function Contacts({ dict }) {
           ))}
         </div>
       </div>
+
+      <section
+        id="feedback"
+        className="scroll-mt-24 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8"
+        aria-labelledby="feedback-heading"
+      >
+        <h2 id="feedback-heading" className="text-xl font-semibold text-neutral-900 sm:text-2xl">
+          {dict?.contacts?.formTitle || dict?.mainPage?.mainBlockFeedback?.title || 'Обратная связь'}
+        </h2>
+        {fb?.descriptionOne ? (
+          <p className="mt-3 max-w-2xl text-sm text-neutral-600">{fb.descriptionOne}</p>
+        ) : null}
+        {fb?.descriptionTwo ? (
+          <p className="mt-2 max-w-2xl text-sm text-neutral-500">{fb.descriptionTwo}</p>
+        ) : null}
+
+        <form onSubmit={handleSubmit} className="mt-8 max-w-xl space-y-4">
+          <div>
+            <label htmlFor="feedback-name" className="mb-1 block text-sm font-medium text-neutral-800">
+              {fb?.name}
+            </label>
+            <input
+              id="feedback-name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm text-neutral-900 outline-none ring-[var(--color-accent)] transition focus:border-[var(--color-accent)] focus:ring-2"
+            />
+          </div>
+          <div>
+            <label htmlFor="feedback-email" className="mb-1 block text-sm font-medium text-neutral-800">
+              {fb?.mail}
+            </label>
+            <input
+              id="feedback-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full rounded-lg border border-neutral-200 px-3 py-2 text-sm text-neutral-900 outline-none ring-[var(--color-accent)] transition focus:border-[var(--color-accent)] focus:ring-2"
+            />
+          </div>
+          <div>
+            <label htmlFor="feedback-message" className="mb-1 block text-sm font-medium text-neutral-800">
+              {fb?.message}
+            </label>
+            <textarea
+              id="feedback-message"
+              name="info_text"
+              rows={5}
+              required
+              value={infoText}
+              onChange={(e) => setInfoText(e.target.value)}
+              className="w-full resize-y rounded-lg border border-neutral-200 px-3 py-2 text-sm text-neutral-900 outline-none ring-[var(--color-accent)] transition focus:border-[var(--color-accent)] focus:ring-2"
+            />
+          </div>
+
+          {status === 'success' ? (
+            <p className="text-sm font-medium text-green-700" role="status">
+              {fb?.success}
+            </p>
+          ) : null}
+          {status === 'error' ? (
+            <p className="text-sm text-red-600" role="alert">
+              {errorMessage || fb?.error}
+            </p>
+          ) : null}
+
+          <button
+            type="submit"
+            disabled={status === 'sending'}
+            className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--color-accent)] px-8 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-[var(--color-accent-hover)] disabled:opacity-60"
+          >
+            {status === 'sending' ? '…' : fb?.enterButoon || 'Отправить'}
+          </button>
+        </form>
+      </section>
     </ClientPageTitle>
   );
 }
