@@ -58,32 +58,32 @@ export default function MainPage({ dict }) {
               radial-gradient(ellipse 80% 50% at 100% 0%, rgba(12, 74, 110, 0.08), transparent)`,
           }}
         />
-        <Container className="relative py-14 sm:py-16 md:py-20 lg:py-24">
-          <div className="max-w-3xl">
+        <Container className="relative py-10 sm:py-16 md:py-20 lg:py-24">
+          <div className="min-w-0 max-w-3xl">
             {kicker ? (
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--color-accent)] sm:text-[11px] sm:tracking-[0.2em]">
                 {kicker}
               </p>
             ) : null}
             <h1
               id="hero-heading"
-              className={`text-balance text-4xl font-semibold leading-[1.1] tracking-tight text-neutral-900 md:text-5xl lg:text-6xl ${kicker ? 'mt-4' : ''}`}
+              className={`text-balance break-words text-3xl font-semibold leading-[1.12] tracking-tight text-neutral-900 sm:text-4xl md:text-5xl lg:text-6xl ${kicker ? 'mt-3 sm:mt-4' : ''}`}
             >
               {heroTitle}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-600 md:text-lg">
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-neutral-600 sm:mt-6 sm:text-base md:text-lg">
               {h?.descriptions?.main}
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
               <Link
                 href={`/${lang}/news`}
-                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-[var(--color-accent)] px-8 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-soft transition hover:bg-[var(--color-accent-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[var(--color-accent)] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-soft transition hover:bg-[var(--color-accent-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)] sm:w-auto sm:min-w-[44px] sm:px-8"
               >
                 {dict?.mainPage?.mainNews?.link || 'Новости'}
               </Link>
               <Link
                 href={`/${lang}/contacts#feedback`}
-                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border-2 border-neutral-900 px-8 py-3.5 text-sm font-semibold uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-900 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
+                className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full border-2 border-neutral-900 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-neutral-900 transition hover:bg-neutral-900 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 sm:w-auto sm:min-w-[44px] sm:px-8"
               >
                 {dict?.callback || 'Контакты'}
               </Link>

@@ -68,8 +68,8 @@ export default function Contacts({ dict }) {
 
   return (
     <ClientPageTitle dict={dict}>
-      <div className="mb-12">
-        <p className="mb-8 text-sm text-neutral-600">
+      <div className="mb-10 min-w-0 sm:mb-12">
+        <p className="mb-6 text-sm leading-relaxed text-neutral-600 sm:mb-8">
           {dict?.contacts?.subtitle ||
             'По вопросам поступления и сотрудничества обращайтесь по указанным контактам.'}
         </p>
@@ -82,16 +82,16 @@ export default function Contacts({ dict }) {
               <p className="text-sm font-medium text-[var(--color-accent)]">
                 {c?.[`role_${lang} `] || c?.[`role_${lang}`]}
               </p>
-              <h3 className="mt-2 text-base font-semibold text-neutral-900">
+              <h3 className="mt-2 break-words text-base font-semibold text-neutral-900">
                 {c?.[`title_${lang} `] || c?.[`title_${lang}`]}
               </h3>
               {c?.contact ? (
-                <p className="mt-3 text-sm text-neutral-600">{c.contact}</p>
+                <p className="mt-3 break-words text-sm text-neutral-600">{c.contact}</p>
               ) : null}
               {c?.email ? (
                 <Link
                   href={`mailto:${c.email}`}
-                  className="mt-2 inline-block text-sm text-[var(--color-accent)] hover:underline"
+                  className="mt-2 inline-block max-w-full break-all text-sm text-[var(--color-accent)] hover:underline"
                 >
                   {c.email}
                 </Link>
@@ -103,10 +103,10 @@ export default function Contacts({ dict }) {
 
       <section
         id="feedback"
-        className="scroll-mt-24 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8"
+        className="scroll-mt-20 rounded-xl border border-neutral-200 bg-white p-4 shadow-sm sm:scroll-mt-24 sm:p-8"
         aria-labelledby="feedback-heading"
       >
-        <h2 id="feedback-heading" className="text-xl font-semibold text-neutral-900 sm:text-2xl">
+        <h2 id="feedback-heading" className="break-words text-xl font-semibold text-neutral-900 sm:text-2xl">
           {dict?.contacts?.formTitle || dict?.mainPage?.mainBlockFeedback?.title || 'Обратная связь'}
         </h2>
         {fb?.descriptionOne ? (
@@ -116,7 +116,7 @@ export default function Contacts({ dict }) {
           <p className="mt-2 max-w-2xl text-sm text-neutral-500">{fb.descriptionTwo}</p>
         ) : null}
 
-        <form onSubmit={handleSubmit} className="mt-8 max-w-xl space-y-4">
+        <form onSubmit={handleSubmit} className="mt-6 max-w-xl min-w-0 space-y-4 sm:mt-8">
           <div>
             <label htmlFor="feedback-name" className="mb-1 block text-sm font-medium text-neutral-800">
               {fb?.name}

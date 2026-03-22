@@ -40,10 +40,10 @@ export default function Footer() {
       <Container className="py-14 lg:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div className="lg:col-span-1">
-            <Link href={`/${lang}`} className="flex items-start gap-3">
-              <img src="/atk-logo-footer.png" alt="" className="h-14 w-14 object-contain opacity-95" />
+            <Link href={`/${lang}`} className="flex min-w-0 items-start gap-3">
+              <img src="/atk-logo-footer.png" alt="" className="h-12 w-12 shrink-0 object-contain opacity-95 sm:h-14 sm:w-14" />
               <span
-                className="text-sm font-medium leading-relaxed text-neutral-200"
+                className="min-w-0 break-words text-sm font-medium leading-relaxed text-neutral-200"
                 dangerouslySetInnerHTML={{ __html: dict?.footer?.slogan || '' }}
               />
             </Link>

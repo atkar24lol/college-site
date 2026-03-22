@@ -26,7 +26,7 @@ const Map = ({ ariaLabel = 'Карта' }) => {
   return (
     <div className="w-full" role="region" aria-label={ariaLabel}>
       <MapContainer
-        className="z-10 h-[320px] w-full md:h-[400px]"
+            className="z-10 h-[280px] w-full sm:h-[320px] md:h-[400px]"
         center={position}
         zoom={17}
         scrollWheelZoom={false}

@@ -41,7 +41,11 @@ export default function Awards({ dict }) {
 
   return (
     <ClientPageTitle dict={dict}>
-      {a?.description ? <p className="mb-10 text-sm text-neutral-600">{a.description}</p> : null}
+      {a?.description ? (
+        <p className="mb-8 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:mb-10 [overflow-wrap:anywhere]">
+          {a.description}
+        </p>
+      ) : null}
 
       {hall.length > 0 ? (
         <section className="mb-14">
@@ -66,10 +70,12 @@ export default function Awards({ dict }) {
                 </div>
                 <div className="p-5 sm:p-6">
                   {t(item, 'title') ? (
-                    <h3 className="text-lg font-semibold text-neutral-900">{t(item, 'title')}</h3>
+                    <h3 className="break-words text-lg font-semibold text-neutral-900">{t(item, 'title')}</h3>
                   ) : null}
                   {t(item, 'description') ? (
-                    <p className="mt-3 text-sm leading-relaxed text-neutral-600">{t(item, 'description')}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-neutral-600 [overflow-wrap:anywhere]">
+                      {t(item, 'description')}
+                    </p>
                   ) : null}
                 </div>
               </div>

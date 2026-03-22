@@ -25,6 +25,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-sans);
+    /* Длинные слова/URL не раздувают страницу по горизонтали */
+    overflow-wrap: anywhere;
   }
 
   img {

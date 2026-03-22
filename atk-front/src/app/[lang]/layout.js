@@ -16,9 +16,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru" className={inter.variable} suppressHydrationWarning>
-      <body className={`flex min-h-screen flex-col ${inter.className}`}>
+      <body className={`flex min-h-screen flex-col overflow-x-hidden ${inter.className}`}>
         <Header />
-        <div className="flex-1">{children}</div>
+        <div className="flex min-w-0 flex-1 flex-col">{children}</div>
         <Footer />
       </body>
     </html>

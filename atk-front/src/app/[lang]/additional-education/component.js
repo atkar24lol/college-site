@@ -42,7 +42,7 @@ export default function AdditionalEducation({ dict }) {
 
   return (
     <ClientPageTitle dict={dict}>
-      <p className="mb-6 max-w-3xl text-sm leading-relaxed text-neutral-600">
+      <p className="mb-6 max-w-3xl text-sm leading-relaxed text-neutral-600 [overflow-wrap:anywhere]">
         {c?.intro}
       </p>
 
@@ -71,7 +71,7 @@ export default function AdditionalEducation({ dict }) {
           return (
             <article
               key={program.id}
-              className="flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition hover:border-neutral-300 hover:shadow-md"
+              className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition hover:border-neutral-300 hover:shadow-md"
             >
               <button
                 type="button"
@@ -93,7 +93,7 @@ export default function AdditionalEducation({ dict }) {
                       {category}
                     </p>
                   ) : null}
-                  <h2 className="text-base font-semibold leading-snug text-neutral-900 sm:text-lg">
+                  <h2 className="break-words text-base font-semibold leading-snug text-neutral-900 sm:text-lg">
                     {title}
                   </h2>
                   <p className="mt-1 text-xs text-[var(--color-accent)]">
@@ -114,16 +114,14 @@ export default function AdditionalEducation({ dict }) {
                   {mini ? (
                     <p className="mt-3 line-clamp-3 flex-1 text-sm text-neutral-600">{mini}</p>
                   ) : null}
-                  <div className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t border-neutral-100 pt-4">
+                  <div className="mt-4 flex flex-col gap-2 border-t border-neutral-100 pt-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-3">
                     {program.price != null ? (
-                      <p className="text-lg font-semibold text-neutral-900">
+                      <p className="text-lg font-semibold tabular-nums text-neutral-900">
                         {program.price.toLocaleString()}{' '}
                         <span className="text-sm font-normal text-neutral-600">{c?.currency}</span>
                       </p>
-                    ) : (
-                      <span />
-                    )}
-                    <span className="text-sm font-medium text-[var(--color-accent)]">
+                    ) : null}
+                    <span className="text-sm font-medium text-[var(--color-accent)] sm:ml-auto sm:text-right">
                       {cp?.aboutButton}
                     </span>
                   </div>

@@ -102,17 +102,17 @@ const InternatonalCooperation = ({ dict }) => {
 
     return (
         <ClientPageTitle dict={dict}>
-            <div className="rounded-lg border border-neutral-200 bg-white p-6 sm:p-8">
+            <div className="min-w-0 max-w-full break-words rounded-lg border border-neutral-200 bg-white p-4 [overflow-wrap:anywhere] sm:p-6 md:p-8">
                 {renderTextWithFormatting(dict?.cooperation?.maintext)}
             </div>
 
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                 {programs.map((program) => (
                     <button
                         type="button"
                         key={program.id}
                         onClick={() => router.push(`/${lang}/international-cooperation/${program.id}`)}
-                        className="overflow-hidden rounded-lg border border-neutral-200 bg-white text-left transition hover:border-neutral-300 hover:shadow-sm"
+                        className="min-w-0 overflow-hidden rounded-lg border border-neutral-200 bg-white text-left transition hover:border-neutral-300 hover:shadow-sm"
                     >
                         <div className="aspect-video bg-neutral-100">
                             {program?.image ? (
@@ -120,7 +120,7 @@ const InternatonalCooperation = ({ dict }) => {
                             ) : null}
                         </div>
                         <div className="p-4">
-                            <p className="font-semibold text-neutral-900">{program?.[`title_${lang}`]}</p>
+                            <p className="line-clamp-3 break-words font-semibold text-neutral-900">{program?.[`title_${lang}`]}</p>
                             <span className="mt-2 inline-block text-sm text-[var(--color-accent)]">
                                 {dict?.blogAndNews?.titles?.aboutButton}
                             </span>
@@ -130,7 +130,7 @@ const InternatonalCooperation = ({ dict }) => {
             </div>
 
             {pages > 1 && (
-                <nav className="mt-10 flex justify-center gap-2">
+                <nav className="mt-10 flex flex-wrap justify-center gap-2" aria-label="Pagination">
                     {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (
                         <button
                             key={p}
