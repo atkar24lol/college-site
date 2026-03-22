@@ -1,0 +1,36 @@
+.faq-block {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
+}
+
+.accordion {
+  border: none;
+  outline: none;
+}
+
+.css-h9vto1-MuiPaper-root-MuiAccordion-root::before {
+  display: none;
+}
+
+.MuiPagination-ul li button {
+  border-radius: 0px;
+  padding: 14px;
+  font-weight: 600;
+  color: #0079c1;
+  background-color: transparent;
+}
+
+.MuiPagination-ul li button.Mui-selected {
+  border-radius: 0px;
+  padding: 14px;
+  color: #fff;
+  background-color: #0079c1;
+  border: 1px solid #0079c1;
+}
+
+.MuiPagination-ul li button.Mui-selected:hover {
+  border-radius: 0px;
+  padding: 14px;
+  color: #fff;
+  font-weight: 600;
+  background-color: #0079c1;
+}

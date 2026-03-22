@@ -1,0 +1,43 @@
+# --- Общее ---
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Секреты и локальные env (никогда не коммитить) ---
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# --- Frontend (atk-front) ---
+atk-front/node_modules/
+atk-front/.next/
+atk-front/out/
+atk-front/build/
+atk-front/.vercel
+atk-front/*.tsbuildinfo
+atk-front/next-env.d.ts
+
+# --- Backend (college-back) ---
+college-back/.venv/
+college-back/venv/
+college-back/__pycache__/
+college-back/**/__pycache__/
+college-back/*.py[cod]
+college-back/.pytest_cache/
+college-back/.mypy_cache/
+college-back/htmlcov/
+college-back/.coverage
+college-back/*.sqlite3
+college-back/media/
+college-back/static/
+
+# Docker / локальные тома (опционально)
+*.pid

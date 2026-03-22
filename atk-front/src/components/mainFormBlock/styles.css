@@ -1,0 +1,11 @@
+.border-gradient {
+  border-image-source: linear-gradient(
+    91.02deg,
+    #ffffff -25.06%,
+    rgba(199, 224, 240, 0.874878) -19.11%,
+    rgba(139, 191, 224, 0.739659) -1.27%,
+    rgba(39, 136, 198, 0.518049) 43.67%,
+    rgba(0, 114, 188, 0.43) 107.12%
+  );
+  border-image-slice: 1;
+}

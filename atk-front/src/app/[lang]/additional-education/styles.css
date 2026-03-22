@@ -1,0 +1,60 @@
+.education-classes {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-prev {
+  width: 18px;
+  height: 36px;
+  position: absolute;
+  left: 20px;
+  background-image: url('/prev-btn-main-news.png');
+  background-size: cover;
+}
+
+.swiper-button-prev::after {
+  display: none;
+}
+
+.swiper-button-next {
+  width: 18px;
+  height: 36px;
+  position: absolute;
+  right: 20px;
+  background-image: url('/next-btn-main-news.png');
+  background-size: cover;
+}
+
+.mainMobileNews .swiper-button-next::after {
+  display: none;
+}
+
+.MuiPagination-ul li button {
+  border-radius: 0px;
+  padding: 14px;
+  font-weight: 600;
+  color: #0079c1;
+  background-color: transparent;
+}
+
+.MuiPagination-ul li button.Mui-selected {
+  border-radius: 0px;
+  padding: 14px;
+  color: #fff;
+  background-color: #0079c1;
+  border: 1px solid #0079c1;
+}
+
+.MuiPagination-ul li button.Mui-selected:hover {
+  border-radius: 0px;
+  padding: 14px;
+  color: #fff;
+  font-weight: 600;
+  background-color: #0079c1;
+}

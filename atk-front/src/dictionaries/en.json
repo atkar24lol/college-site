@@ -1,0 +1,396 @@
+{
+  "download": "download",
+  "callback": "Feedback",
+  "header": {
+    "searchField": "Search...",
+    "slogan": "Agrotechnical College<br>named after<br>Sultan Ibraimov",
+    "list": {
+      "main": "Home",
+      "news": "News",
+      "educationalActivity": "Educational Activity",
+      "gallary": "Gallery",
+      "entrants": "For Entrants",
+      "teachers": "For Teachers",
+      "contacts": "Contacts",
+      "additionalEducation": "Additional edu.",
+      "aboutTeachers": "Our Teachers",
+      "rewards": "Awards",
+      "internationalCooperation": "International Cooperation"
+    },
+
+    "previews": {
+      "titles": {
+        "electronLibrary": "Electronic Library",
+        "main": "College mission",
+        "blogAndNews": "Blog and News Feed",
+        "blogAndNewsDetails": "About the event",
+        "educationActivity": "Educational Activity",
+        "teachers": "For Teachers",
+        "gallary": "Multimedia",
+        "contacts": "Contacts",
+        "entrants": "For Entrants",
+        "aboutTeachers": "Our Teachers",
+        "additionalEducation": "Additional Education",
+        "searchResult": "Site Search",
+        "internationalCooperation": "International Cooperation"
+      },
+      "descriptions": {
+        "electronLibrary": "electronLibrary On this page, you can explore our electronic library",
+        "main": "Training of a qualified specialist, education of a moral, creative, socially active personality based on preserving one’s traditions, experience and introducing innovations in a continuous education system",
+        "blogAndNews": "KNAU Blog and News page",
+        "blogAndNewsDetails": "On this page, you can learn about a specific event.",
+        "educationActivity": "KNAU Educational Activity",
+        "teachers": "Page for teachers",
+        "gallary": "KNAU Multimedia",
+        "contacts": "Contact page for feedback",
+        "entrants": "Page for entrants and future students of KNAU",
+        "aboutTeachers": "On this page, you can learn more about our specialists",
+        "additionalEducation": "Classes are taught by experienced teachers and highly qualified specialists from leading partner companies of ATC. The college cooperates with business structures and government agencies on issues of organizing internships and employment of students. Upon completion of the training, the listener is issued a graduation document, established by the ATC: a training certificate, a certificate of advanced training, a diploma of professional retraining.",
+        "searchResult": "Search for information on the KNAU portal",
+        "internationalCooperation": "On this page, you can get acquainted with our offers for further cooperation"
+      }
+    }
+  },
+  "footer": {
+    "slogan": "Agrotechnical College<br>named after Sultan Ibraimov",
+    "list": {
+      "blogAndNewsFeed": "Blog and News Feed",
+      "additionalEducation": "Additional Education",
+      "educationalActivity": "Educational Activity",
+      "multimedia": "Gallary",
+      "informationForStudents": "Information for Students",
+      "contactInformation": "Contact Information",
+      "informationForTeachers": "Information for Teachers",
+      "aboutTeachers": "About Teachers",
+      "toApplicants": "For Applicants",
+      "electronicLibrary": "Electronic Library",
+      "internationalCooperation": "International Cooperation",
+      "rewards": "Awards",
+      "siteMap": "Site Map",
+      "educationalPortal": "Educational Portal",
+      "address": "68, Mederova, Bishkek",
+      "phone": "+996 312 575407"
+    }
+  },
+  "mainPage": {
+    "mainNews": {
+      "title": "News",
+      "link": "All News"
+    },
+
+    "mainInfoBlock": {
+      "titles": {
+        "one": "Your journey starts here",
+        "two": "AGRONOMY",
+        "three": "VETERINARY SCIENCE",
+        "four": "HYDRAULIC ENGINEERING",
+        "five": "LAND MANAGEMENT",
+        "six": "ICHTHYOLOGY AND FISH FARMING",
+        "seven": "LAND RECLAMATION, REHABILITATION, AND SOIL PROTECTION",
+        "eight": "APPLIED GEODESY",
+        "nine": "APPLIED INFORMATICS",
+        "ten": "AGRICULTURAL ENTREPRENEURSHIP",
+        "eleven": "ECOLOGY AND ENVIRONMENTAL PROTECTION"
+      },
+
+      "descriptions": {
+        "one": "Welcome to our university, we have a lot here",
+        "two": "Agronomy is the science of cultivating agricultural crops, improving soil, and increasing yield.",
+        "three": "Veterinary science is the study of diagnosing, treating, and preventing diseases in animals.",
+        "four": "Hydraulic engineering is the science of water resources and their utilization.",
+        "five": "Land management is the science of the rational use of land resources.",
+        "six": "Ichthyology is the science of fish and their behavior.",
+        "seven": "Land reclamation is the science of improving land for agricultural use.",
+        "eight": "Geodesy is the science of measuring and mapping the Earth.",
+        "nine": "Informatics is the science of processing and storing information.",
+        "ten": "Agricultural entrepreneurship is the study of business in agriculture.",
+        "eleven": "Ecology is the science of the interaction between organisms and their environment."
+      }
+    },
+
+    "mainBlockFeedback": {
+      "title": "Feedback",
+      "descriptionOne": "We will be happy to answer your questions",
+      "descriptionTwo": "We will answer you anytime!",
+      "buttonSubmit": "Fill out the form"
+    }
+  },
+  "awards": {
+    "title": "Awards",
+    "description": "College awards and certificates"
+  },
+  "blogAndNews": {
+    "titles": {
+      "allNews": "All News",
+      "allEvent": "All Events",
+      "simpleDocs": "Sample Documents",
+      "aboutButton": "Learn More",
+      "calendar": "Event Calendar"
+    }
+  },
+  "educationActivity": {
+    "maintext": "# Educational Activity of the College\n\nThe Agrotechnical College delivers secondary professional and additional education programs. The learning process is based on national standards, modern teaching methods, and a practice‑oriented approach.\n\n## Key Areas\n\n- Training qualified specialists in the college’s priority fields\n- Practical learning in laboratories, training sites, and partner organizations\n- Student participation in projects, olympiads, competitions, and conferences\n- Support for employment and career development of graduates\n\n## Learning Process\n\n1. Theoretical training with up‑to‑date learning materials\n2. Practical classes and internships\n3. Interim and final assessment according to established requirements\n\n## Quality and Development\n\nThe college continuously improves its programs, updates methodological materials, and strengthens its technical base. We work with employers so graduates gain relevant skills and are competitive in the job market.\n\n## Student Support\n\n- Teacher and curator consultations\n- Methodological support for projects and internships\n- Additional courses and workshops",
+    "mission": {
+      "title": "College Mission",
+      "descriptionOne": "Description for mission #1",
+      "descriptionTwo": "Description for mission #2"
+    },
+
+    "values": {
+      "title": "College Values",
+      "valueOne": {
+        "title": "Value #1",
+        "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
+        "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
+      },
+
+      "valueTwo": {
+        "title": "Value #2",
+        "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
+        "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
+      },
+
+      "valueThree": {
+        "title": "Value #3",
+        "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
+        "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
+      }
+    },
+
+    "strategicGoal": {
+      "title": "Strategic Goal",
+      "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
+      "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
+    },
+
+    "routesLearning": {
+      "title": "Main Directions of Education Quality Policy",
+      "routeOne": {
+        "title": "Strategic Goal",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      },
+      "routeTwo": {
+        "title": "Strategic Goal",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      },
+      "routeThree": {
+        "title": "Strategic Goal",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      },
+      "routeFour": {
+        "title": "Strategic Goal",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      }
+    }
+  },
+  "teachers": {
+    "title": "Class Schedules",
+    "button": "Learn More",
+    "age": "Age",
+    "details": {
+      "subjects": "Subjects",
+      "age": "Age",
+      "email": "Email"
+    },
+    "materials": {
+      "title": "Materials for Preparing Lectures",
+      "materialOne": {
+        "title": "Material 1",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      },
+      "materialTwo": {
+        "title": "Material 2",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      },
+      "materialThree": {
+        "title": "Material 3",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      },
+      "materialFour": {
+        "title": "Material 4",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "buttonText": "Learn More"
+      }
+    }
+  },
+  "gallary": {
+    "titleImages": "Photos",
+    "titleVideos": "Videos",
+    "titleImagesGraduates": "Graduates Gallery"
+  },
+  "contacts": {
+    "title": "Contacts",
+    "addressLabel": "Address",
+    "rector": "Rector",
+    "rectorData": "A.S. Pushkin",
+    "president": "President",
+    "presidentData": "A.S. Pushkin",
+    "feedback": {
+      "name": "Your Name",
+      "mail": "Your Email",
+      "subject": "Subject",
+      "message": "Write your message",
+      "phone": "Phone (optional)",
+      "enterButoon": "Submit",
+      "success": "Thank you! Your message was sent.",
+      "error": "Failed to send. Please try again.",
+      "descriptionOne": "Please fill out the following form to submit a complaint. We value your feedback and strive to improve our services. Please be as accurate and detailed as possible in your description.",
+      "descriptionTwo": "We commit to reviewing your complaint as soon as possible and taking the necessary actions to improve our service. Thank you for your feedback."
+    }
+  },
+  "cooperation": {
+    "newsBlock": {
+      "title": "News",
+      "button": "All News",
+      "aboutButton": "Learn More"
+    },
+
+    "programsBlock": {
+      "title": "International Education Programs",
+      "titleTwo": "Title",
+      "description": "Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description"
+    },
+
+    "capibilitiesStudentsBlock": {
+      "title": "Opportunities for Students to Study Abroad",
+      "texts": {
+        "textOne": "Joint educational programs: double diplomas and joint programs with universities abroad.",
+        "textTwo": "Exchange programs: studying abroad for one or two semesters as part of exchange programs."
+      },
+      "buttons": {
+        "buttonOne": "Program",
+        "buttonTwo": "Program"
+      }
+    },
+
+    "eventsBlock": {
+      "title": "Joint Events",
+      "eventOne": {
+        "title": "Event #1",
+        "description": "Description for event #1",
+        "buttonText": "Learn More"
+      },
+      "eventTwo": {
+        "title": "Event #2",
+        "description": "Description for event #2",
+        "buttonText": "Learn More"
+      },
+      "eventThree": {
+        "title": "Event #3",
+        "description": "Description for event #3",
+        "buttonText": "Learn More"
+      },
+      "eventFour": {
+        "title": "Event #4",
+        "description": "Description for event #4",
+        "buttonText": "Learn More"
+      }
+    },
+    "maintext": "## Open to the World\n\nThe Sultan Ibraimov Agrotechnical College is a leader in vocational education in Kyrgyzstan and is actively integrating into the international educational space. It was one of the first colleges to establish partnerships with foreign organizations, enabling the modernization of the learning environment and the implementation of international educational standards.\n\n## Key Areas of International Cooperation\n\n### Educational Programs and Projects\n\n- **Germany (2006)** – In collaboration with the Weihenstephan University of Applied Sciences, a program in \"Entrepreneurship in Agriculture\" was developed according to European standards.\n- **Finland (since 2014)** – The University of Eastern Finland supports the development of ichthyology and fish farming. The college has established an Aquaculture Center, a water laboratory, and a training fish farm, developed courses, and trained teachers.\n- **Japan (since 2018)** – Cooperation with the Agricultural School of Shihoro (JICA). New products based on local resources (e.g., sea buckthorn oatmeal cookies) have been developed, and practical agricultural education programs have been improved. In 2023, a Memorandum was signed with Iwatani School in Japan for student exchange and academic cooperation.\n- **Kazakhstan (2023)** – A Memorandum with Ushkonur College on joint training of specialists in dual education.\n\n### Infrastructure Projects\n\n- **USA (2003-2005)** – The American Mercy Corps helped equip the college with furniture and educational equipment.\n- **OSCE (2011)** – \"Water Quality in Kyrgyzstan\" project, under which the college received a mobile chemical laboratory from the Japanese Embassy.\n- **Asia (2015-2018)** – The Asian Development Bank’s \"Vocational Education\" project. The college established modern laboratories for \"Hydrotechnical Construction\" and \"Veterinary\" specialties.\n- **Saudi Arabia (2023)** – Participation in a project to improve vocational education infrastructure, including major repairs and laboratory equipment.\n\n## The Future of International Cooperation\n\nThe college continues to expand international ties, implement innovative educational methodologies, and improve infrastructure, opening new opportunities for students.\n\n✨ The journey of discovery continues…\n"
+  },
+  "siteMap": {
+    "atk": "About ATC",
+    "invite": "Admission",
+    "educationWithAtk": "Education at ATC",
+    "main": "Main Page",
+    "content": "Articles and Content",
+    "multimedia": "Multimedia",
+    "contacts": "Contact Information",
+    "feedback": "Feedback Forms",
+    "entrants": "For Entrants",
+    "students": "For Students",
+    "educationActivity": "Educational Activity",
+    "gallary": "Gallery",
+    "aboutTeachers": "About Teachers",
+    "blogAndNews": "Blog and News Feed",
+    "questionParrents": "Parent Questions",
+    "teachers": "For Teachers"
+  },
+  "additionalEducation": {
+    "coursesAndPrograms": {
+      "title": "All Courses and Programs",
+      "duration": "Duration",
+      "price": "Price",
+      "aboutButton": "Learn More"
+    },
+    "classSchedule": {
+      "title": "Class Schedule"
+    },
+    "advantages": {
+      "title": "Advantages of Additional Education"
+    },
+    "sertificates": {
+      "title": "Sertificates"
+    }
+  },
+  "totalTranslate": {
+    "about": "Learn More"
+  },
+  "entrants": {
+    "prioretyInformation": {
+      "title": "Important Admission Information",
+      "blockOne": {
+        "title": "For Admission to ATC You Need",
+        "textOne": "Document of appropriate education;",
+        "textTwo": "ORT certificate;",
+        "textThree": "Passport or other identity documents of the entrant",
+        "textFour": "Copy of the military registration certificate (for those liable for military service)",
+        "textFive": "Photos 3x4 (4 pcs)"
+      },
+      "blockTwo": {
+        "title": "For Foreign Citizens",
+        "textOne": "Document of appropriate education;",
+        "textTwo": "Passport or other identity documents of the entrant",
+        "textThree": "Copy of the military registration certificate (for those liable for military service)",
+        "textFour": "Photos 3x4 (6 pcs)",
+        "textFive": "Medical certificate No. 086"
+      }
+    },
+    "dateReception": {
+      "title": "Reception Dates"
+    },
+    "admissionProcedures": {
+      "title": "Admission Procedures",
+      "blockOne": {
+        "title": "Document Preparation",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      "blockTwo": {
+        "title": "Document Submission",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      "blockThree": {
+        "title": "Document Processing",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      "blockFour": {
+        "title": "You Are Admitted!",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      "blockFive": {
+        "title": "Something Else",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      },
+      "blockSix": {
+        "title": "Interview",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    },
+    "specializations": {
+      "title": "Specializations",
+      "format": "Study Format:",
+      "long": "Study Duration:",
+      "contract": "Study Contract:"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions"
+    }
+  }
+}

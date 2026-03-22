@@ -1,0 +1,36 @@
+.mainMobileNews {
+  width: 100%;
+  height: 388px;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-prev {
+  width: 18px;
+  height: 36px;
+  position: absolute;
+  left: 20px;
+  background-image: url('/prev-btn-main-news.png');
+  background-size: cover;
+}
+
+.swiper-button-prev::after {
+  display: none;
+}
+
+.swiper-button-next {
+  width: 18px;
+  height: 36px;
+  position: absolute;
+  right: 20px;
+  background-image: url('/next-btn-main-news.png');
+  background-size: cover;
+}
+
+.mainMobileNews .swiper-button-next::after {
+  display: none;
+}

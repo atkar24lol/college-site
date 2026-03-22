@@ -1,0 +1,8 @@
+.news-box {
+  background: linear-gradient(
+    360deg,
+    #000000 10.11%,
+    rgba(44, 44, 44, 0.565814) 67.51%,
+    rgba(102, 102, 102, 0) 100%
+  );
+}

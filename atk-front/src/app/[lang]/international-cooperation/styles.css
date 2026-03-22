@@ -1,0 +1,43 @@
+.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+}
+
+.programms {
+  height: 100%;
+  width: 100%;
+}
+
+.break-words {
+  word-wrap: break-word;
+}
+
+.MuiPagination-ul li button {
+  border-radius: 0px;
+  padding: 14px;
+  font-weight: 600;
+  color: #0079c1;
+  background-color: transparent;
+}
+
+.MuiPagination-ul li button.Mui-selected {
+  border-radius: 0px;
+  padding: 14px;
+  color: #fff;
+  background-color: #0079c1;
+  border: 1px solid #0079c1;
+}
+
+.MuiPagination-ul li button.Mui-selected:hover {
+  border-radius: 0px;
+  padding: 14px;
+  color: #fff;
+  font-weight: 600;
+  background-color: #0079c1;
+}

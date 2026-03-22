@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #f5f4f2;
+    --color-surface: #ffffff;
+    --color-text: #1a1a1a;
+    --color-muted: #5c5c5c;
+    --color-border: #e8e6e3;
+    --color-accent: #0c4a6e;
+    --color-accent-hover: #0a3d5c;
+    --color-accent-soft: #e0f0fa;
+    --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-sans);
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+/* Без @apply для palette-neutral: в @layer components JIT иногда не видит text-neutral-* */
+@layer components {
+  .nav-link {
+    position: relative;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #525252;
+    transition: color 0.15s ease;
+  }
+  .nav-link:hover {
+    color: var(--color-accent);
+  }
+  .nav-link-active {
+    color: var(--color-accent);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
