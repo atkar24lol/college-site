@@ -161,11 +161,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Через запятую: https://ваш-сайт.kg,https://www.ваш-сайт.kg
-CORS_ALLOWED_ORIGINS = _csv_list(
-    config("CORS_ALLOWED_ORIGINS", default="http://localhost:3000"),
-    default="http://localhost:3000",
+# Важно: corsheaders не принимает `*` как элемент списка, поэтому отдельно обрабатываем.
+_cors_raw = config("CORS_ALLOWED_ORIGINS", default="http://localhost:3000")
+if str(_cors_raw).strip() == "*":
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOWED_ORIGINS = []
+else:
+    CORS_ALLOW_ALL_ORIGINS = False
+    CORS_ALLOWED_ORIGINS = _csv_list(
+        _cors_raw,
+        default="http://localhost:3000",
+    )
+
+# Админка и формы по HTTPS за nginx (полные origin со схемой)
+_csrf_raw = config("CSRF_TRUSTED_ORIGINS", default="")
+CSRF_TRUSTED_ORIGINS = (
+    _csv_list(_csrf_raw, default="") if str(_csrf_raw).strip() else []
 )
-CORS_ALLOW_ALL_ORIGINS = False
 
 # За reverse proxy (nginx) с HTTPS
 if config("USE_TLS_BEHIND_PROXY", default=False, cast=bool):

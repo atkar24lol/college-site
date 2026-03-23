@@ -1,0 +1,69 @@
+# Скопируйте в /etc/nginx/sites-available/kjsdhfb.xyz и поправьте пути.
+# upstream на Gunicorn и Next.js на localhost.
+
+upstream django_backend {
+    server 127.0.0.1:8000;
+}
+
+upstream nextjs_frontend {
+    server 127.0.0.1:3000;
+}
+
+server {
+    listen 80;
+    server_name kjsdhfb.xyz www.kjsdhfb.xyz;
+
+    client_max_body_size 25M;
+
+    # Медиа Django (путь на сервере к college-back/media)
+    location /media/ {
+        alias /var/www/college-site/college-back/media/;
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+
+    # Статика Django после collectstatic
+    location /static/ {
+        alias /var/www/college-site/college-back/static/;
+        expires 7d;
+    }
+
+    # API с префиксом языка: /ru/api/v1/, /en/api/v1/, /ky/api/v1/
+    location ~ ^/(ru|en|ky)/api/ {
+        proxy_pass http://django_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Swagger / Redoc без языкового префикса (как в urls.py)
+    location /api/v1/swagger/ {
+        proxy_pass http://django_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    location /api/v1/redoc/ {
+        proxy_pass http://django_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Админка Django
+    location /admin/ {
+        proxy_pass http://django_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Фронтенд Next.js
+    location / {
+        proxy_pass http://nextjs_frontend;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}

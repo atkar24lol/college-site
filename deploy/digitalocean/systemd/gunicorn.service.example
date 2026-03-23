@@ -1,0 +1,20 @@
+# /etc/systemd/system/gunicorn-college.service
+# Пути и пользователя подставьте под свой сервер.
+
+[Unit]
+Description=Gunicorn for college Django API
+After=network.target
+
+[Service]
+User=deploy
+Group=deploy
+WorkingDirectory=/var/www/college-site/college-back
+Environment="PATH=/var/www/college-site/college-back/.venv/bin"
+ExecStart=/var/www/college-site/college-back/.venv/bin/gunicorn backend.wsgi:application \
+  --bind 127.0.0.1:8000 \
+  --workers 3 \
+  --timeout 120
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

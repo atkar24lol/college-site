@@ -1,0 +1,19 @@
+# /etc/systemd/system/nextjs-college.service
+# Установите Node (nvm или пакетный node) и соберите фронт: npm run build
+
+[Unit]
+Description=Next.js college frontend
+After=network.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/var/www/college-site/atk-front
+Environment=NODE_ENV=production
+EnvironmentFile=-/var/www/college-site/atk-front/.env.production
+ExecStart=/usr/bin/env npm run start -- -p 3000 -H 127.0.0.1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
