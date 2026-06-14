@@ -7,8 +7,10 @@ Dockerfile
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-# Важно: dev-значения NEXT_PUBLIC_* не должны попадать в образ —
-# API-base задаётся build-аргументом (по умолчанию относительный /ru/api/v1)
-.env*.local
+# Важно: НИКАКИЕ .env-файлы не должны попадать в образ — иначе next build
+# подхватит .env.production/.env.local и переопределит build-аргумент.
+# API-base и image-hosts задаются ТОЛЬКО через ARG (по умолчанию относительный /ru/api/v1).
+.env
+.env.*
 README*.md
 FRONTEND_TECHNICAL_SPEC.md
