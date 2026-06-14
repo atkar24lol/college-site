@@ -10,6 +10,9 @@ const extraPatterns = imageHosts.flatMap((hostname) => [
 ]);
 
 const nextConfig = {
+  // Самодостаточная сборка для Docker: .next/standalone содержит свой server.js
+  // и только нужные node_modules. Образ получается компактным.
+  output: 'standalone',
   images: {
     remotePatterns: [
       { protocol: 'http', hostname: 'localhost', pathname: '/**' },

@@ -39,7 +39,7 @@ export default function BlogAndNews({ dict }) {
           <Link
             key={item.id}
             href={`/${lang}/news/${item.id}`}
-            className="group overflow-hidden rounded-lg border border-neutral-200 bg-white transition hover:border-neutral-300 hover:shadow-sm"
+            className="group overflow-hidden rounded-lg border border-neutral-200 bg-white transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md"
           >
             <div className="aspect-[16/10] bg-neutral-100">
               {item.image ? (

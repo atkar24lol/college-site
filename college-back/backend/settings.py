@@ -50,11 +50,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -179,10 +178,25 @@ CSRF_TRUSTED_ORIGINS = (
     _csv_list(_csrf_raw, default="") if str(_csrf_raw).strip() else []
 )
 
-# За reverse proxy (nginx) с HTTPS
+# За reverse proxy (nginx) с HTTPS.
+# Включается флагом USE_TLS_BEHIND_PROXY=True ТОЛЬКО когда есть валидный сертификат,
+# иначе SECURE_SSL_REDIRECT уведёт сайт в бесконечный редирект по http.
 if config("USE_TLS_BEHIND_PROXY", default=False, cast=bool):
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     USE_X_FORWARDED_HOST = True
+    # Куки только по HTTPS
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    # Принудительный редирект http→https (nginx обычно тоже это делает — дублируем на уровне Django)
+    SECURE_SSL_REDIRECT = True
+    # HSTS: год, со включением поддоменов и preload. Включать только когда HTTPS точно стабилен.
+    SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS", default=31536000, cast=int)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+# Не раскрывать тип контента вопреки заголовку; clickjacking-защита
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
 
 # Для отладки без SMTP: EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 EMAIL_BACKEND = config(

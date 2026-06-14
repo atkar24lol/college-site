@@ -6,8 +6,10 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # Только loopback: БД доступна локально (dev-клиенты), но НЕ из интернета.
+    # Внутри compose-сети Django обращается к db по hostname `db` без публикации порта.
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - knau_db:/var/lib/postgresql/data
     healthcheck:
@@ -29,8 +31,10 @@ services:
       - .:/app
       - ./media:/app/media
       - ./static:/app/static
+    # Только loopback: на сервере nginx проксирует на 127.0.0.1:8000.
+    # Публиковать на 0.0.0.0 нельзя — Docker обходит ufw и откроет порт в интернет.
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     depends_on:
       db:
         condition: service_healthy

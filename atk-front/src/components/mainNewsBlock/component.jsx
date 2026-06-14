@@ -33,7 +33,7 @@ export default function MainNewsBlock({ dict, news }) {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2
             id="main-news-heading"
-            className="text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl"
+            className="heading-accent text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl"
           >
             {dict?.mainPage?.mainNews?.title || 'Новости'}
           </h2>

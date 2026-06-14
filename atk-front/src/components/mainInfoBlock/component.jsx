@@ -25,7 +25,7 @@ export default function MainInfoBlock({ dict, showHeading = true }) {
           <>
             <h2
               id="main-specialities-heading"
-              className="text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl"
+              className="heading-accent text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl"
             >
               {dict?.header?.previews?.titles?.specialities || 'Специальности'}
             </h2>
@@ -40,7 +40,7 @@ export default function MainInfoBlock({ dict, showHeading = true }) {
               <Link
                 key={href}
                 href={`/${lang}/specialities/${href}`}
-                className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-soft transition hover:border-neutral-300 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-soft transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
               >
                 <div className="relative aspect-[16/10] bg-neutral-100">
                   <Image
@@ -52,7 +52,7 @@ export default function MainInfoBlock({ dict, showHeading = true }) {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-medium text-neutral-900">{title}</h3>
+                  <h3 className="font-medium text-neutral-900 transition-colors group-hover:text-[var(--color-accent)]">{title}</h3>
                   <p className="mt-1 line-clamp-2 text-xs text-neutral-600">{desc}</p>
                 </div>
               </Link>

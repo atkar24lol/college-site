@@ -18,7 +18,7 @@ export default function MainFormBlock({ dict }) {
           <div className="min-w-0 max-w-xl">
             <h2
               id="main-feedback-heading"
-              className="text-xl font-semibold tracking-tight text-neutral-900 sm:text-2xl"
+              className="heading-accent text-xl font-semibold tracking-tight text-neutral-900 sm:text-2xl"
             >
               {b?.title || 'Обратная связь'}
             </h2>

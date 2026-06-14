@@ -112,7 +112,7 @@ const InternatonalCooperation = ({ dict }) => {
                         type="button"
                         key={program.id}
                         onClick={() => router.push(`/${lang}/international-cooperation/${program.id}`)}
-                        className="min-w-0 overflow-hidden rounded-lg border border-neutral-200 bg-white text-left transition hover:border-neutral-300 hover:shadow-sm"
+                        className="min-w-0 overflow-hidden rounded-lg border border-neutral-200 bg-white text-left transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md"
                     >
                         <div className="aspect-video bg-neutral-100">
                             {program?.image ? (

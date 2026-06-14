@@ -49,7 +49,7 @@ export default function Awards({ dict }) {
 
       {hall.length > 0 ? (
         <section className="mb-14">
-          <h2 className="text-xl font-semibold text-neutral-900 sm:text-2xl">{a?.hallOfFame?.title}</h2>
+          <h2 className="heading-accent text-xl font-semibold text-neutral-900 sm:text-2xl">{a?.hallOfFame?.title}</h2>
           {a?.hallOfFame?.lead ? (
             <p className="mt-2 max-w-2xl text-sm text-neutral-600">{a.hallOfFame.lead}</p>
           ) : null}
@@ -86,7 +86,7 @@ export default function Awards({ dict }) {
 
       {partners.length > 0 ? (
         <section className="mb-14">
-          <h2 className="text-xl font-semibold text-neutral-900 sm:text-2xl">{a?.partners?.title}</h2>
+          <h2 className="heading-accent text-xl font-semibold text-neutral-900 sm:text-2xl">{a?.partners?.title}</h2>
           {a?.partners?.lead ? (
             <p className="mt-2 max-w-2xl text-sm text-neutral-600">{a.partners.lead}</p>
           ) : null}
@@ -124,7 +124,7 @@ export default function Awards({ dict }) {
 
       {general.length > 0 ? (
         <section>
-          <h2 className="text-xl font-semibold text-neutral-900 sm:text-2xl">{a?.general?.title}</h2>
+          <h2 className="heading-accent text-xl font-semibold text-neutral-900 sm:text-2xl">{a?.general?.title}</h2>
           {a?.general?.lead ? (
             <p className="mt-2 max-w-2xl text-sm text-neutral-600">{a.general.lead}</p>
           ) : null}

@@ -7,7 +7,7 @@ export function PageShell({ title, description, children, className = '' }) {
         {(title || description) && (
           <header className="mb-8 border-b border-[var(--color-border)] pb-6 sm:mb-12 sm:pb-10">
             {title && (
-              <h1 className="text-balance break-words text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl md:text-4xl">
+              <h1 className="heading-accent text-balance break-words text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl md:text-4xl">
                 {title}
               </h1>
             )}

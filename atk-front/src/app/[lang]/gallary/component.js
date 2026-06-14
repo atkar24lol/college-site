@@ -26,7 +26,7 @@ const SWIPER_COMMON = {
 function GallerySection({ title, children, emptyHint }) {
   return (
     <section className="border-b border-[var(--color-border)] py-12 last:border-b-0 md:py-14">
-      <h2 className="text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
+      <h2 className="heading-accent text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
         {title}
       </h2>
       {children ?? (

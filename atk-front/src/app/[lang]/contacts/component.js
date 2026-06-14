@@ -106,7 +106,7 @@ export default function Contacts({ dict }) {
         className="scroll-mt-20 rounded-xl border border-neutral-200 bg-white p-4 shadow-sm sm:scroll-mt-24 sm:p-8"
         aria-labelledby="feedback-heading"
       >
-        <h2 id="feedback-heading" className="break-words text-xl font-semibold text-neutral-900 sm:text-2xl">
+        <h2 id="feedback-heading" className="heading-accent break-words text-xl font-semibold text-neutral-900 sm:text-2xl">
           {dict?.contacts?.formTitle || dict?.mainPage?.mainBlockFeedback?.title || 'Обратная связь'}
         </h2>
         {fb?.descriptionOne ? (

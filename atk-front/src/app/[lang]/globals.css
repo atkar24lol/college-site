@@ -12,6 +12,9 @@
     --color-accent: #0c4a6e;
     --color-accent-hover: #0a3d5c;
     --color-accent-soft: #e0f0fa;
+    /* Вторичный акцент — золото пшеницы с эмблемы колледжа (только декор) */
+    --color-gold: #c19a3e;
+    --color-gold-soft: #f3ead2;
     --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   }
 
@@ -50,6 +53,27 @@
   }
   .nav-link-active {
     color: var(--color-accent);
+  }
+
+  /* Заголовок секции с золотым акцентом-подчёркиванием (эмблема колледжа) */
+  .heading-accent {
+    position: relative;
+    padding-bottom: 0.85rem;
+  }
+  .heading-accent::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2.75rem;
+    height: 3px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, var(--color-gold), var(--color-accent));
+  }
+  /* Вариант с центрированием подчёркивания */
+  .heading-accent-center::after {
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 

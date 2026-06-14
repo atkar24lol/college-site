@@ -41,3 +41,8 @@ college-back/static/
 
 # Docker / локальные тома (опционально)
 *.pid
+
+# --- Локальные агентские скиллы (не для деплоя; симлинки в .claude указывают на абсолютные пути машины) ---
+.agents/
+.claude/skills/
+skills-lock.json

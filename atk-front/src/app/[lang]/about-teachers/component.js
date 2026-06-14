@@ -26,7 +26,7 @@ export default function AboutTeachers({ dict }) {
           <Link
             key={t.id}
             href={`/${lang}/teachers/${t.id}`}
-            className="group overflow-hidden rounded-lg border border-neutral-200 bg-white transition hover:border-neutral-300"
+            className="group overflow-hidden rounded-lg border border-neutral-200 bg-white transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md"
           >
             <div className="aspect-square bg-neutral-100">
               {t.avatar ? (

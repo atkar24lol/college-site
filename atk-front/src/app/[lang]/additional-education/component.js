@@ -71,7 +71,7 @@ export default function AdditionalEducation({ dict }) {
           return (
             <article
               key={program.id}
-              className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition hover:border-neutral-300 hover:shadow-md"
+              className="flex min-w-0 flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md"
             >
               <button
                 type="button"

@@ -17,7 +17,7 @@ function Section({ id, title, description, children, className = '' }) {
       <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10">
         {title ? (
           <header className="mb-10 md:mb-12">
-            <h2 className="text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
+            <h2 className="heading-accent text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
               {title}
             </h2>
             {description ? (

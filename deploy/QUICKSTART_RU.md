@@ -1,42 +1,46 @@
-# Что делать прямо сейчас (демо на DigitalOcean + домен)
+# Деплой atk.kg — всё в Docker, одной командой
 
-Идея: **Docker только для бэкенда** (Postgres + Django). **Фронт (Next.js)** проще запустить на самой машине через Node — меньше возни с одним большим Docker-образом.
+Идея: **весь стек в Docker** — nginx + Next.js (фронт) + Django/Gunicorn (бэкенд) + Postgres.
+Поднимается одной командой `docker compose`. На хост-машину ставится только Docker.
 
-Ниже — порядок «сверху вниз». Домен и IP подставь свои (пример: `kjsdhfb.xyz`, `164.92.121.45`).
+Домен и IP подставь свои (пример: `kjsdhfb.xyz`, `164.92.121.45`).
 
 ---
 
-## 1. DNS (GoDaddy)
+## 1. (Опционально) DNS
 
-- Запись **A**: имя **@** → IP дроплета.
-- Запись **A**: имя **www** → тот же IP.
+Если есть домен (GoDaddy и т.п.):
+- Запись **A**: `@` → IP сервера.
+- Запись **A**: `www` → тот же IP.
 
-Подожди 5–30 минут, пока `ping твой-домен` начнёт отвечать этим IP.
+Без домена сайт будет доступен по `http://IP/`.
 
 ---
 
 ## 2. Зайти на сервер
 
-С ноутбука:
-
 ```bash
 ssh root@ТВОЙ_IP
 ```
 
-Дальше все команды — **на сервере**, если не сказано иначе.
+Дальше все команды — **на сервере**.
 
 ---
 
-## 3. Установить Docker и утилиты
+## 3. Установить Docker и закрыть фаервол
 
 ```bash
 apt update && apt upgrade -y
-apt install -y docker.io docker-compose-v2 git nginx certbot python3-certbot-nginx ufw
+apt install -y docker.io docker-compose-v2 git ufw
 ufw allow OpenSSH
-ufw allow 'Nginx Full'
+ufw allow 80/tcp
+ufw allow 443/tcp
 ufw --force enable
 systemctl enable --now docker
 ```
+
+> Порты `8000` (Django) и `5432` (Postgres) наружу **не** открываем — в `docker-compose.yml`
+> они забиндены на `127.0.0.1`, наружу торчит только nginx на `:80`.
 
 ---
 
@@ -48,32 +52,31 @@ git clone https://github.com/ТВОЙ_ЛОГИН/college-site.git
 cd college-site
 ```
 
-(Если репозиторий приватный — настрой SSH-ключ на GitHub или используй HTTPS с токеном.)
+(Приватный репозиторий — настрой SSH-ключ на GitHub или HTTPS с токеном.)
 
 ---
 
-## 5. Файл `college-back/.env` на сервере
-
-Создай файл:
+## 5. Файл `college-back/.env`
 
 ```bash
 nano /var/www/college-site/college-back/.env
 ```
 
-Минимум так (подставь свои значения БД и домен):
+Минимум (подставь свои значения):
 
 ```env
 DEBUG=False
 SECRET_KEY=придумай-длинную-случайную-строку
 
+# домены + IP сервера; если домена нет — оставь IP и 127.0.0.1
 ALLOWED_HOSTS=kjsdhfb.xyz,www.kjsdhfb.xyz,127.0.0.1,164.92.121.45
 CORS_ALLOWED_ORIGINS=https://kjsdhfb.xyz,https://www.kjsdhfb.xyz
 CSRF_TRUSTED_ORIGINS=https://kjsdhfb.xyz,https://www.kjsdhfb.xyz
-USE_TLS_BEHIND_PROXY=True
+# USE_TLS_BEHIND_PROXY=True   # включить ТОЛЬКО после настройки HTTPS (см. п.8)
 
 POSTGRES_DB=atk_db
 POSTGRES_USER=atk_user
-POSTGRES_PASSWORD=надежный-пароль-для-бд
+POSTGRES_PASSWORD=надёжный-пароль-для-бд
 POSTGRES_HOST=db
 POSTGRES_PORT=5432
 
@@ -84,104 +87,64 @@ EMAIL_HOST_USER=
 EMAIL_HOST_PASSWORD=
 ```
 
-Сохрани (Ctrl+O, Enter, Ctrl+X).
-
-**Важно:** если раньше на дроплете уже крутилась старая база в Docker с **другим** логином/паролем — либо совпадай `.env` с тем, что уже в volume, либо удали volume и подними заново (данные в БД пропадут). Для чистого первого деплоя проще удалить старые контейнеры/volume или использовать новые `POSTGRES_*`.
+> Фронт по умолчанию ходит на API по **относительному** пути `/ru/api/v1` (тот же origin, что nginx),
+> поэтому домен в сборку фронта зашивать не нужно — работает и по IP, и по домену.
+> Картинки из админки (медиа) отдаёт сам nginx с `/media/`, отдельный `NEXT_PUBLIC_IMAGE_HOSTS` не требуется.
 
 ---
 
-## 6. Запустить бэкенд в Docker (с Gunicorn)
+## 6. Поднять весь стек одной командой
 
 ```bash
 cd /var/www/college-site/college-back
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
-docker compose logs -f web
 ```
 
-Пока не увидишь, что Gunicorn слушает порт 8000 без ошибок — Ctrl+C из логов.
+Поднимутся 4 контейнера: `nginx_container` (:80) → `nextjs_container` + `django_container` + `postgres_container`.
+Бэкенд на старте сам делает `migrate` и `collectstatic`.
 
 Проверка с сервера:
 
 ```bash
-curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/ru/api/v1/news/news/
+curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1/ru                       # 200 — фронт
+curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1/ru/api/v1/news/news/      # 200 — API
 ```
 
-Должно быть `200`.
+Открой в браузере: `http://ТВОЙ_IP/` (или домен).
 
 ---
 
-## 7. Node.js и фронт (Next.js)
+## 7. Суперпользователь для админки
 
 ```bash
-apt install -y ca-certificates curl
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install -y nodejs
-cd /var/www/college-site/atk-front
-nano .env.production
+docker exec -it django_container python manage.py createsuperuser
 ```
 
-Внутри **одна строка** (подставь домен):
-
-```env
-NEXT_PUBLIC_API_BASE=https://kjsdhfb.xyz/ru/api/v1
-NEXT_PUBLIC_IMAGE_HOSTS=kjsdhfb.xyz,www.kjsdhfb.xyz
-```
-
-Сборка и запуск на порту 3000 **только на localhost**:
-
-```bash
-npm ci
-npm run build
-nohup npx next start -p 3000 -H 127.0.0.1 > /var/log/next-college.log 2>&1 &
-```
-
-Проверка:
-
-```bash
-curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/ru
-```
-
-Должно быть `200`.
+Админка: `http://ТВОЙ_IP/admin/`.
 
 ---
 
-## 8. Nginx + HTTPS
+## 8. HTTPS (когда есть домен)
 
-Скопируй пример из репозитория и поправь пути, если у тебя не `/var/www/college-site`:
+Самый простой путь — поставить certbot на хост и временно отдать ему `:80`, либо
+использовать companion-контейнер (`nginx-proxy` + `acme-companion`). Для первого демо
+можно остаться на `http://IP`. Когда дойдём до HTTPS — добавим 443-server-block в
+`college-back/nginx/default.conf`, том с сертификатами и certbot; тогда же выставить
+`USE_TLS_BEHIND_PROXY=True` в `.env` и пересобрать стек.
 
-```bash
-cp /var/www/college-site/deploy/digitalocean/nginx-site.conf.example /etc/nginx/sites-available/kjsdhfb.xyz
-ln -sf /etc/nginx/sites-available/kjsdhfb.xyz /etc/nginx/sites-enabled/
-rm -f /etc/nginx/sites-enabled/default
-nginx -t && systemctl reload nginx
-```
-
-Сертификат:
-
-```bash
-certbot --nginx -d kjsdhfb.xyz -d www.kjsdhfb.xyz
-```
-
-После этого открой в браузере: `https://kjsdhfb.xyz`
+> Альтернатива «nginx/Node на хосте» (systemd) лежит в `deploy/digitalocean/` —
+> это legacy-вариант, для контейнерного деплоя он не нужен.
 
 ---
 
-## 9. Что проверить глазами
+## Обновление после изменений в коде
 
-- Главная открывается.
-- В DevTools → Network: запросы к API идут на `https://твой-домен/ru/api/v1/...` и отвечают 200.
-- Картинки из админки грузятся (если нет — проверь `NEXT_PUBLIC_IMAGE_HOSTS` и пересобери фронт).
-
----
-
-## Коротко: Docker или нет?
-
-| Что | Как лучше для демо |
-|-----|---------------------|
-| Postgres + Django | **Да, Docker** — как у тебя локально, плюс `docker-compose.prod.yml` с Gunicorn |
-| Next.js | **Проще без Docker** — `npm run build` и `next start` на сервере |
-
-Если хочешь **вообще всё в Docker** — это отдельный `docker-compose` с фронтом и nginx; для «пары дней» обычно не окупается.
+```bash
+cd /var/www/college-site
+git pull
+cd college-back
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+```
 
 ---
 
@@ -189,7 +152,9 @@ certbot --nginx -d kjsdhfb.xyz -d www.kjsdhfb.xyz
 
 ```bash
 cd /var/www/college-site/college-back
-docker compose -f docker-compose.yml -f docker-compose.prod.yml logs --tail=100 web
-tail -50 /var/log/next-college.log
-journalctl -u nginx -n 50 --no-pager
+P="-f docker-compose.yml -f docker-compose.prod.yml"
+docker compose $P ps
+docker compose $P logs --tail=100 nginx
+docker compose $P logs --tail=100 frontend
+docker compose $P logs --tail=100 web
 ```

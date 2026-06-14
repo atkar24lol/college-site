@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+Dockerfile
+.dockerignore
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Важно: dev-значения NEXT_PUBLIC_* не должны попадать в образ —
+# API-base задаётся build-аргументом (по умолчанию относительный /ru/api/v1)
+.env*.local
+README*.md
+FRONTEND_TECHNICAL_SPEC.md

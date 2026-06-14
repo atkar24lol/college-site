@@ -17,7 +17,7 @@ function Section({ id, title, description, children, className = '' }) {
       <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-8 lg:px-10">
         {title ? (
           <header className="mb-10 md:mb-12">
-            <h2 className="text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
+            <h2 className="heading-accent text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
               {title}
             </h2>
             {description ? (
@@ -92,7 +92,7 @@ function AdmissionDateCard({ data, lang, dateLocale }) {
 
 function ProcedureStep({ index, title, description, iconSrc }) {
   return (
-    <div className="flex flex-col rounded-2xl border border-[var(--color-border)] bg-white p-6 shadow-soft transition hover:border-neutral-300">
+    <div className="flex flex-col rounded-2xl border border-[var(--color-border)] bg-white p-6 shadow-soft transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md">
       <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-accent-soft)]">
         <Image src={iconSrc} alt="" width={32} height={48} className="object-contain" />
       </div>
@@ -251,7 +251,7 @@ export default function Entrants({ dict }) {
           <div className="mx-auto max-w-[1200px] px-5 sm:px-8 lg:px-10">
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-5">
-                <h2 className="text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
+                <h2 className="heading-accent text-balance text-2xl font-semibold tracking-tight text-neutral-900 md:text-3xl">
                   {dict?.entrants?.faq?.title}
                 </h2>
                 <p className="mt-4 max-w-md text-sm leading-relaxed text-neutral-600">
