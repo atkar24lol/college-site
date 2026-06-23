@@ -9,6 +9,7 @@ from apps.abouts.models import (
     Images_for_multimedia,
     Block_of_contact,
     Lecturer,
+    Graduate,
 )
 
 
@@ -42,3 +43,8 @@ class Block_of_contactModelTranslation(TranslationOptions):
 @register(Lecturer)
 class LecturerModelTranslation(TranslationOptions):
     fields = ("name", "bio", "subject")
+
+
+@register(Graduate)
+class GraduateModelTranslation(TranslationOptions):
+    fields = ("label", "title", "description")

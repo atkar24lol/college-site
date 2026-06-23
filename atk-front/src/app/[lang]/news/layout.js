@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Блог и новостная лента',
-  description: 'Блог и новостная лента',
-  icons: faviconUrl,
+  title: 'Новости',
+  description: 'Последние новости Агротехнического колледжа им. С.Ибраимова — события, объявления, достижения.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

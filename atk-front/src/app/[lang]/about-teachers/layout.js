@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Наши преподователи',
-  description: 'Страница Наши преподователи',
-  icons: faviconUrl,
+  title: 'Наши преподаватели',
+  description: 'Педагогический состав Агротехнического колледжа им. С.Ибраимова при КНАУ — квалификация, биография, предмет.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

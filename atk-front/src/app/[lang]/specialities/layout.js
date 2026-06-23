@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Специальности',
-  description: 'Специальности',
-  icons: faviconUrl,
+  title: 'Специальности',
+  description: 'Перечень специальностей и направлений подготовки в Агротехническом колледже им. С.Ибраимова при КНАУ.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

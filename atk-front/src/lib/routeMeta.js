@@ -22,6 +22,7 @@ export function getHeroMeta(path, lang, dict, params = {}) {
     { test: (p) => p === `/${lang}/teachers/${teacherId}`, title: h?.titles?.aboutTeachers, desc: h?.descriptions?.aboutTeachers },
     { test: (p) => p === `/${lang}/contacts`, title: h?.titles?.contacts, desc: h?.descriptions?.contacts },
     { test: (p) => p === `/${lang}/entrants`, title: h?.titles?.entrants, desc: h?.descriptions?.entrants },
+    { test: (p) => p === `/${lang}/graduates`, title: h?.titles?.graduates, desc: h?.descriptions?.graduates },
     { test: (p) => p === `/${lang}/about-teachers`, title: h?.titles?.aboutTeachers, desc: h?.descriptions?.aboutTeachers },
     { test: (p) => p === `/${lang}/additional-education`, title: h?.titles?.additionalEducation, desc: h?.descriptions?.additionalEducation },
     { test: (p) => p === `/${lang}/awards`, title: dict?.awards?.title || dict?.header?.list?.rewards, desc: dict?.awards?.description || '' },

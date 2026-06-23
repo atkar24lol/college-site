@@ -31,6 +31,7 @@ export default function Footer() {
       { name: dict?.footer?.list?.internationalCooperation, href: `/${lang}/international-cooperation` },
       { name: dict?.footer?.list?.contactInformation, href: `/${lang}/contacts` },
       { name: dict?.footer?.list?.rewards, href: `/${lang}/awards` },
+      { name: dict?.footer?.list?.graduates, href: `/${lang}/graduates` },
     ],
   ];
 
@@ -40,7 +41,7 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
           <div className="lg:col-span-1">
             <Link href={`/${lang}`} className="flex min-w-0 items-start gap-3">
-              <img src="/atk-logo-footer.png" alt="" className="h-12 w-12 shrink-0 object-contain opacity-95 sm:h-14 sm:w-14" />
+              <img src="/atk-emblem.png" alt="" className="h-12 w-12 shrink-0 object-contain opacity-95 sm:h-14 sm:w-14" />
               <span
                 className="min-w-0 break-words text-sm font-medium leading-relaxed text-neutral-200"
                 dangerouslySetInnerHTML={{ __html: dict?.footer?.slogan || '' }}
@@ -85,7 +86,9 @@ export default function Footer() {
               <img src="/tiktok-footer-icon.svg" alt="TikTok" className="h-7 w-7 opacity-90" />
             </a>
           </div>
-          <p className="text-xs text-neutral-600">© {new Date().getFullYear()} Агротехнический колледж</p>
+          <p className="text-xs text-neutral-600">
+            © {new Date().getFullYear()} Агротехнический колледж им. С.Ибраимова при КНАУ им. К.И.Скрябина
+          </p>
         </div>
       </Container>
     </footer>

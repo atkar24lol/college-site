@@ -39,18 +39,18 @@ export default function BlogAndNews({ dict }) {
           <Link
             key={item.id}
             href={`/${lang}/news/${item.id}`}
-            className="group overflow-hidden rounded-lg border border-neutral-200 bg-white transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md"
+            className="group flex h-full flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white transition hover:-translate-y-0.5 hover:border-[var(--color-gold)] hover:shadow-md"
           >
-            <div className="aspect-[16/10] bg-neutral-100">
+            <div className="aspect-[16/10] shrink-0 bg-neutral-100">
               {item.image ? (
                 <img src={item.image} alt="" className="h-full w-full object-cover" />
               ) : null}
             </div>
-            <div className="p-4">
+            <div className="flex flex-1 flex-col p-4">
               <time className="text-xs text-neutral-500">
                 {item.date ? new Date(item.date).toLocaleDateString('ru-RU') : ''}
               </time>
-              <h2 className="mt-2 font-semibold text-neutral-900 group-hover:text-[var(--color-accent)] line-clamp-2">
+              <h2 className="mt-2 line-clamp-2 font-semibold text-neutral-900 group-hover:text-[var(--color-accent)]">
                 {item[`title_${lang}`] || item.title}
               </h2>
               <p className="mt-2 line-clamp-2 text-sm text-neutral-600">

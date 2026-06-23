@@ -107,3 +107,21 @@ class LecturerSerializer(serializers.ModelSerializer):
             representation['avatar'] = image_url
         return representation
 
+
+class GraduateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Graduate
+        fields = "__all__"
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        request = self.context.get("request")
+        if instance.image:
+            image_url = instance.image.url
+            if request and not str(image_url).startswith("http"):
+                image_url = request.build_absolute_uri(image_url)
+            representation["image"] = image_url
+        else:
+            representation["image"] = None
+        return representation
+

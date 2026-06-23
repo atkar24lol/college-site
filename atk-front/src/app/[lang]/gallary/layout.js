@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Галерея',
-  description: 'Галерея',
-  icons: faviconUrl,
+  title: 'Галерея',
+  description: 'Фотографии и видеозаписи событий, мероприятий и жизни Агротехнического колледжа им. С.Ибраимова.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

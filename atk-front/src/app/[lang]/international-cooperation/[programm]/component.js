@@ -39,7 +39,9 @@ export default function ProgrammDetails({ dict }) {
             <ReactMarkdown>{data[`description_${lang}`] || ''}</ReactMarkdown>
           </div>
           {data.image ? (
-            <img src={data.image} alt="" className="max-h-96 w-full rounded-md object-cover" />
+            <div className="aspect-[16/9] overflow-hidden rounded-md">
+              <img src={data.image} alt="" className="h-full w-full object-cover" />
+            </div>
           ) : null}
           <dl className="grid gap-2 text-sm sm:grid-cols-2">
             {data[`duration_${lang}`] ? (

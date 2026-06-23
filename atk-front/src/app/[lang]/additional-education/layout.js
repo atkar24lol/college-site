@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Дополнительное образование',
-  description: 'Дополнительное образование',
-  icons: faviconUrl,
+  title: 'Дополнительное образование',
+  description: 'Курсы и программы дополнительного профессионального образования АТК при КНАУ.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

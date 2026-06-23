@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Программа международного образования',
-  description: 'Программа международного образования',
-  icons: faviconUrl,
+  title: 'Программа сотрудничества',
+  description: 'Подробная информация о программе международного сотрудничества АТК при КНАУ.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

@@ -44,6 +44,11 @@ router.register(
     viewset=LecturerViewSet,
     basename='lecturers'
 )
+router.register(
+    prefix='graduates',
+    viewset=GraduateViewSet,
+    basename='graduates'
+)
 
 urlpatterns = [
     path("", include(router.urls)),

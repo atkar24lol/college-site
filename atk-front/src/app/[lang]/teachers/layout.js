@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Для преподователей',
-  description: 'Страница для преподователей',
-  icons: faviconUrl,
+  title: 'Преподавателям',
+  description: 'Учебные материалы, расписание и полезные ресурсы для преподавателей АТК при КНАУ.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

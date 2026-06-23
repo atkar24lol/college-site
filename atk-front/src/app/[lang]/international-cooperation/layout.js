@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Международное сотрудничество',
-  description: 'Международное сотрудничество',
-  icons: faviconUrl,
+  title: 'Международное сотрудничество',
+  description: 'Международные программы и партнёрские проекты Агротехнического колледжа им. С.Ибраимова при КНАУ.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

@@ -1,11 +1,8 @@
-const faviconUrl = "/favicon.ico";
-
 export const metadata = {
-  title: "КНАУ | Награды",
-  description: "Страница наград",
-  icons: faviconUrl,
+  title: 'Награды и достижения',
+  description: 'Зал славы, сертификаты и награды Агротехнического колледжа им. С.Ибраимова.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

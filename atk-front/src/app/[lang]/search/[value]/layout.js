@@ -1,11 +1,9 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Поиск по сайту',
-  description: 'Поиск по сайту',
-  icons: faviconUrl,
+  title: 'Поиск',
+  description: 'Поиск по сайту Агротехнического колледжа им. С.Ибраимова при КНАУ.',
+  robots: { index: false, follow: false },
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

@@ -10,13 +10,14 @@
   },
   "header": {
     "searchField": "Search...",
-    "slogan": "Agrotechnical College<br>named after<br>Sultan Ibraimov",
+    "slogan": "S. Ibraimov Agrotechnical College<br>under K.I. Skryabin KNAU",
     "list": {
       "main": "Home",
       "news": "News",
       "educationalActivity": "Educational Activity",
       "gallary": "Gallery",
       "entrants": "For Entrants",
+      "graduates": "Our Graduates",
       "teachers": "For Teachers",
       "contacts": "Contacts",
       "additionalEducation": "Additional edu.",
@@ -36,6 +37,7 @@
         "gallary": "Multimedia",
         "contacts": "Contacts",
         "entrants": "For Entrants",
+        "graduates": "Our Graduates",
         "aboutTeachers": "Our Teachers",
         "additionalEducation": "Additional Education",
         "searchResult": "Site Search",
@@ -51,6 +53,7 @@
         "gallary": "KNAU Multimedia",
         "contacts": "Contact page for feedback",
         "entrants": "Page for entrants and future students of KNAU",
+        "graduates": "Stories, achievements, and career paths of college graduates",
         "aboutTeachers": "On this page, you can learn more about our specialists",
         "additionalEducation": "Classes are taught by experienced teachers and highly qualified specialists from leading partner companies of ATC. The college cooperates with business structures and government agencies on issues of organizing internships and employment of students. Upon completion of the training, the listener is issued a graduation document, established by the ATC: a training certificate, a certificate of advanced training, a diploma of professional retraining.",
         "searchResult": "Search for information on the KNAU portal",
@@ -59,7 +62,7 @@
     }
   },
   "footer": {
-    "slogan": "Agrotechnical College<br>named after Sultan Ibraimov",
+    "slogan": "S. Ibraimov Agrotechnical College<br>under K.I. Skryabin KNAU",
     "list": {
       "blogAndNewsFeed": "Blog and News Feed",
       "additionalEducation": "Additional Education",
@@ -73,12 +76,14 @@
       "electronicLibrary": "Electronic Library",
       "internationalCooperation": "International Cooperation",
       "rewards": "Awards",
+      "graduates": "Our Graduates",
       "educationalPortal": "Educational Portal",
       "address": "68, Mederova, Bishkek",
       "phone": "+996 312 575407"
     }
   },
   "mainPage": {
+    "emblemAlt": "Emblem of the S. Ibraimov Agrotechnical College under K.I. Skryabin KNAU",
     "mainNews": {
       "title": "News",
       "link": "All News",
@@ -142,6 +147,27 @@
       "lead": ""
     },
     "empty": "No items have been published yet."
+  },
+  "graduates": {
+    "cards": [
+      {
+        "label": "Career",
+        "title": "In-demand specialists",
+        "description": "College graduates work in agriculture, veterinary science, water management, geodesy, and IT fields."
+      },
+      {
+        "label": "Practice",
+        "title": "Experience from the first years",
+        "description": "Practice-oriented learning helps graduates adapt to the workplace faster."
+      },
+      {
+        "label": "Community",
+        "title": "Connection with the college",
+        "description": "This section will be filled with graduate stories, achievements, and employment materials."
+      }
+    ],
+    "emptyTitle": "Graduate stories are coming soon",
+    "emptyDescription": "Successful stories, photos, achievements, and contacts of college graduates can be published here."
   },
   "blogAndNews": {
     "titles": {
@@ -225,23 +251,23 @@
       "title": "Materials for Preparing Lectures",
       "asideNote": "Methodological materials and references for class preparation.",
       "materialOne": {
-        "title": "Material 1",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Teaching Guides",
+        "description": "Methodological guides and course materials for core disciplines.",
         "buttonText": "Learn More"
       },
       "materialTwo": {
-        "title": "Material 2",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Regulatory Documents",
+        "description": "State educational standards and regulatory documentation by specialty.",
         "buttonText": "Learn More"
       },
       "materialThree": {
-        "title": "Material 3",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Curriculum Plans",
+        "description": "Working programs and curriculum plans by area of study.",
         "buttonText": "Learn More"
       },
       "materialFour": {
-        "title": "Material 4",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Additional Resources",
+        "description": "Supplementary literature, presentations, and resources for teaching staff.",
         "buttonText": "Learn More"
       }
     }
@@ -258,10 +284,7 @@
     "subtitle": "For admissions and partnership inquiries, please use the contacts below.",
     "formTitle": "Feedback",
     "addressLabel": "Address",
-    "rector": "Rector",
-    "rectorData": "A.S. Pushkin",
-    "president": "President",
-    "presidentData": "A.S. Pushkin",
+
     "feedback": {
       "name": "Your Name",
       "mail": "Your Email",
@@ -385,27 +408,27 @@
       "title": "Admission Procedures",
       "blockOne": {
         "title": "Document Preparation",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": "Prepare copies of your education certificate, passport, and other required documents. Check the full list of required documents in advance."
       },
       "blockTwo": {
         "title": "Document Submission",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": "Submit your documents to the admissions office. You can do this in person or through an authorized representative."
       },
       "blockThree": {
         "title": "Document Processing",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": "Your documents will be reviewed by the admissions committee. This process typically takes 1–3 business days."
       },
       "blockFour": {
         "title": "You Are Admitted!",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": "Once your application is approved, you will receive an enrollment order. Welcome to the college!"
       },
       "blockFive": {
-        "title": "Something Else",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "title": "Enrollment",
+        "description": "Sign your enrollment agreement and complete the registration formalities at the college administration office."
       },
       "blockSix": {
         "title": "Interview",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        "description": "Some programs may require a brief interview or entrance assessment. You will be notified in advance of the date and format."
       }
     },
     "faq": {

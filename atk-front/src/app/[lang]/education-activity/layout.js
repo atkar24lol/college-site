@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Образовательная деятельность',
-  description: 'Образовательная деятельность',
-  icons: faviconUrl,
+  title: 'Образовательная деятельность',
+  description: 'Специальности, учебные программы и образовательная деятельность АТК при КНАУ.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

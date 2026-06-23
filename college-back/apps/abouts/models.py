@@ -150,3 +150,22 @@ class Lecturer(models.Model):
         verbose_name = "Преподаватель (демо / старый раздел)"
         verbose_name_plural = "Преподаватели"
 
+
+class Graduate(models.Model):
+    sort_order = models.PositiveIntegerField(default=0, verbose_name="Порядок")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+    image = models.FileField(
+        upload_to="graduates",
+        verbose_name="Фото / изображение",
+        null=True,
+        blank=True,
+    )
+    label = models.CharField(max_length=100, verbose_name="Метка", null=True, blank=True)
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    description = models.TextField(verbose_name="Описание")
+
+    class Meta:
+        ordering = ["sort_order", "id"]
+        verbose_name = "Выпускник / карточка страницы"
+        verbose_name_plural = "Наши выпускники"
+

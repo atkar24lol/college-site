@@ -23,6 +23,8 @@ services:
         # Переопределяется через .env (NEXT_PUBLIC_API_BASE / NEXT_PUBLIC_IMAGE_HOSTS).
         NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-/ru/api/v1}
         NEXT_PUBLIC_IMAGE_HOSTS: ${NEXT_PUBLIC_IMAGE_HOSTS:-}
+        # Используется как metadataBase для OpenGraph. По умолчанию домен сайта.
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://atk.kg}
     container_name: nextjs_container
     restart: unless-stopped
     # Порт не публикуется на хост — nginx достучится по compose-сети (frontend:3000)

@@ -27,6 +27,7 @@ ALLOWED_HOSTS = _csv_list(config("ALLOWED_HOSTS", default="*"))
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -214,4 +215,141 @@ DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default=EMAIL_HOST_USER or 'no
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'backend.pagination.PageSizePagination',
     'PAGE_SIZE': 3
+}
+
+# ─────────────────────────────────────────────
+#  Панель управления сайтом (Jazzmin)
+# ─────────────────────────────────────────────
+JAZZMIN_SETTINGS = {
+    # Заголовки
+    "site_title": "АТК — Сайт",
+    "site_header": "Управление сайтом",
+    "site_brand": "АТК",
+    "welcome_sign": "Добро пожаловать! Выберите раздел слева, чтобы добавить или изменить содержимое сайта.",
+    "copyright": "Агротехнический колледж им. С. Ибраимова",
+
+    # Логотип в шапке (если есть файл в /static/)
+    "site_logo": None,
+    "site_icon": None,
+
+    # Иконка для страницы входа (Font Awesome)
+    "login_logo": None,
+
+    # Поиск: искать по каким моделям
+    "search_model": ["news.News", "abouts.Graduate", "abouts.FAQ"],
+
+    # Какое поле пользователя показывать в шапке
+    "user_avatar": None,
+
+    # Верхнее меню (ссылки для быстрого перехода на сайт)
+    "topmenu_links": [
+        {"name": "🌐 Открыть сайт", "url": "http://localhost:3000/ru", "new_window": True},
+        {"name": "📋 Главная панели", "url": "admin:index"},
+    ],
+
+    # Меню пользователя (справа вверху)
+    "usermenu_links": [
+        {"name": "Сменить пароль", "url": "admin:password_change"},
+    ],
+
+    # ── Боковая навигация ──
+    # Порядок и группировка разделов в сайдбаре.
+    # Иконки — Font Awesome 5 Free (fas / far / fab).
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": [
+        # Порядок групп (app_label)
+        "news",
+        "abouts",
+        "education",
+        "auth",
+    ],
+
+    "icons": {
+        # Приложения
+        "news": "fas fa-newspaper",
+        "abouts": "fas fa-info-circle",
+        "education": "fas fa-graduation-cap",
+        "auth": "fas fa-users-cog",
+
+        # Модели news
+        "news.News": "fas fa-newspaper",
+
+        # Модели abouts
+        "abouts.Graduate": "fas fa-user-graduate",
+        "abouts.Images_for_multimedia": "fas fa-photo-video",
+        "abouts.FAQ": "fas fa-question-circle",
+        "abouts.Sertificate": "fas fa-award",
+        "abouts.Contact": "fas fa-address-card",
+        "abouts.Email_sending": "fas fa-envelope",
+        "abouts.Lecturer": "fas fa-chalkboard-teacher",
+
+        # Модели education
+        "education.Courses_programms": "fas fa-book-open",
+        "education.Admission_date": "fas fa-calendar-alt",
+        "education.Schedule": "fas fa-table",
+        "education.LecturePreparationMaterial": "fas fa-file-download",
+
+        # auth
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+
+    "default_icon_parents": "fas fa-folder",
+    "default_icon_children": "fas fa-circle",
+
+    # Показывать счётчик объектов в меню
+    "related_modal_active": True,
+
+    # Кастомные CSS/JS (можно добавить свои правки поверх jazzmin)
+    "custom_css": None,
+    "custom_js": None,
+
+    # Показывать UI-переключатель темы
+    "show_ui_builder": False,
+
+    # Форматы дат
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs",
+    },
+
+    # Язык (jazzmin отображает интерфейс на языке браузера; Django i18n RU)
+    "language_chooser": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    # Тема Bootstrap (flatly — чистая, светлая, профессиональная)
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-primary",
+    "accent": "accent-primary",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": True,        # шапка всегда сверху
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,       # сайдбар не прокручивается
+    "sidebar": "sidebar-dark-primary",   # тёмный сайдбар
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "flatly",           # светлая чистая тема
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-outline-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success",
+    },
 }

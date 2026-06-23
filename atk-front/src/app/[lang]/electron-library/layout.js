@@ -1,11 +1,8 @@
-const faviconUrl = '/favicon.ico';
-
 export const metadata = {
-  title: 'КНАУ | Электронная библиотека',
-  description: 'Электронная библиотека',
-  icons: faviconUrl,
+  title: 'Электронная библиотека',
+  description: 'Учебные материалы, документы и ресурсы электронной библиотеки АТК при КНАУ.',
 };
 
 export default function Layout({ children }) {
-  return <div>{children}</div>;
+  return <>{children}</>;
 }

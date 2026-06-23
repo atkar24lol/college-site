@@ -1,26 +1,45 @@
-import { Inter } from 'next/font/google';
-import './globals.css';
 import Header from '@/components/header/component';
 import Footer from '@/components/footer/component';
-
-const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter' });
+import LangSetter from './LangSetter';
 
 export const metadata = {
-  title: 'Агротехнический колледж имени Султана Ибраимова',
-  description: 'Официальный сайт колледжа',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  title: {
+    default: 'Агротехнический колледж им. С.Ибраимова — АТК при КНАУ',
+    template: '%s | АТК при КНАУ',
+  },
+  description:
+    'Официальный сайт Агротехнического колледжа им. С.Ибраимова при КНАУ им. К.И.Скрябина — поступление, специальности, новости, контакты.',
+  keywords: [
+    'агротехнический колледж', 'АТК', 'КНАУ', 'Кыргызстан',
+    'колледж Бишкек', 'поступление в колледж', 'аграрный колледж',
+  ],
+  authors: [{ name: 'АТК при КНАУ' }],
+  robots: { index: true, follow: true },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/atk-emblem.png',
+    shortcut: '/atk-emblem.png',
+    apple: '/atk-emblem.png',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'ru_KG',
+    siteName: 'АТК при КНАУ',
+    title: 'Агротехнический колледж им. С.Ибраимова',
+    description:
+      'Официальный сайт Агротехнического колледжа им. С.Ибраимова при КНАУ им. К.И.Скрябина.',
+    images: [{ url: '/atk-logo.png', width: 1200, height: 630, alt: 'АТК при КНАУ' }],
   },
 };
 
-export default function RootLayout({ children }) {
+export default function LangLayout({ children, params }) {
+  const lang = params?.lang ?? 'ru';
   return (
-    <html lang="ru" className={inter.variable} suppressHydrationWarning>
-      <body className={`flex min-h-screen flex-col overflow-x-hidden ${inter.className}`}>
-        <Header />
-        <div className="flex min-w-0 flex-1 flex-col">{children}</div>
-        <Footer />
-      </body>
-    </html>
+    <>
+      <LangSetter lang={lang} />
+      <Header />
+      <div className="flex min-w-0 flex-1 flex-col">{children}</div>
+      <Footer />
+    </>
   );
 }

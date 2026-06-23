@@ -55,7 +55,9 @@ export default function CourseDetails({ dict }) {
           </div>
 
           {data.image ? (
-            <img src={data.image} alt="" className="max-h-96 w-full rounded-md object-cover" />
+            <div className="aspect-[16/9] overflow-hidden rounded-md">
+              <img src={data.image} alt="" className="h-full w-full object-cover" />
+            </div>
           ) : null}
 
           <dl className="grid gap-3 text-sm sm:grid-cols-2">

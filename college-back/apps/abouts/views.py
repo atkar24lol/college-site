@@ -88,6 +88,15 @@ class LecturerViewSet(ModelViewSet):
     search_fields = ["name", "age", "bio", "subject"]
     filterset_fields = ["name", "age", "bio", "subject"]
 
+
+class GraduateViewSet(ModelViewSet):
+    queryset = Graduate.objects.filter(is_published=True)
+    serializer_class = GraduateSerializer
+    permission_classes = (AllowAny,)
+    filter_backends = [filters.DjangoFilterBackend, SearchFilter]
+    search_fields = ["label", "title", "description"]
+    filterset_fields = ["is_published", "label", "title", "description"]
+
 @method_decorator(csrf_exempt, name="dispatch")
 class Sending(APIView):
     permission_classes = (AllowAny,)
@@ -103,15 +112,14 @@ class Sending(APIView):
                     {"error": "Получатель почты не настроен в админке (Email_sending)."},
                     status=503,
                 )
-            # Отправитель SMTP (Gmail и др.) должен совпадать с авторизованным EMAIL_HOST_USER
-            from_addr = settings.EMAIL_HOST_USER or receiver.receiver
             send_mail(
-                subject="Question from Student: " + serializer.validated_data["name"],
-                message="Вопрос: "
-                + serializer.validated_data["info_text"]
-                + "\n почта для ответа: "
-                + serializer.validated_data["email"],
-                from_email=from_addr,
+                subject="Обращение с сайта АТК: " + serializer.validated_data["name"],
+                message=(
+                    f"Имя: {serializer.validated_data['name']}\n"
+                    f"Почта для ответа: {serializer.validated_data['email']}\n\n"
+                    f"Обращение:\n{serializer.validated_data['info_text']}"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[receiver.receiver],
             )
             return Response({"message": "success"}, status=200)
@@ -157,6 +165,12 @@ class GlobalSearchView(APIView):
             Q(name__icontains=query) | Q(age__icontains=query) | Q(bio__icontains=query) | Q(subject__icontains=query)
         )
         results["lecturer"] = (LecturerSerializer(Lecturer_results, many=True, context={'request': request}).data)
+
+        graduate_results = Graduate.objects.filter(
+            Q(label__icontains=query) | Q(title__icontains=query) | Q(description__icontains=query),
+            is_published=True,
+        )
+        results["graduates"] = (GraduateSerializer(graduate_results, many=True, context={'request': request}).data)
 
         faq_results = FAQ.objects.filter(
             Q(question__icontains=query) | Q(answer__icontains=query)
