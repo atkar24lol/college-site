@@ -13,6 +13,10 @@ services:
     restart: unless-stopped
 
   web:
+    build:
+      # Сборка через сеть хоста: на VPS без IPv6 BuildKit-sandbox иначе пытается
+      # ходить по IPv6 и роняет внешние запросы (pip/apt) во время build.
+      network: host
     # runserver → gunicorn; collectstatic в общий со nginx том ./static
     command: >
       sh -c "python manage.py migrate &&
@@ -23,6 +27,9 @@ services:
   frontend:
     build:
       context: ../atk-front
+      # Сборка через сеть хоста: на VPS без IPv6 next/font иначе не может
+      # скачать шрифты с Google Fonts (BuildKit-sandbox уходит в IPv6 и таймаутит).
+      network: host
       args:
         # Относительный API-base: фронт ходит на тот же origin, что отдаёт nginx.
         # Переопределяется через .env (NEXT_PUBLIC_API_BASE / NEXT_PUBLIC_IMAGE_HOSTS).
