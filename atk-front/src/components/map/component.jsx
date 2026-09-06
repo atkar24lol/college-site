@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 
 const Map = ({ ariaLabel = 'Карта' }) => {
   const position = [42.852111, 74.605192];
-  const point = [42.851718, 74.605004];
+  const point = [42.85147, 74.60669];
 
   const customIconActive = L.icon({
     iconUrl: '/map-marker-active.svg',
