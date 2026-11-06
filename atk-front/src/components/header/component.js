@@ -206,7 +206,7 @@ export default function Header() {
         </div>
 
         {/* ── Ряд 2: логотип + поиск + язык + гамбургер ── */}
-        <Container className="flex h-[4.25rem] items-center justify-between gap-3 sm:h-[4.5rem]">
+        <Container className="flex min-h-[4.25rem] items-center justify-between gap-3 py-1.5 sm:min-h-[4.5rem]">
           {/* Логотип */}
           <Link href={`/${lang}`} className="flex min-w-0 shrink items-center gap-2 sm:gap-3">
             <img
@@ -214,8 +214,13 @@ export default function Header() {
               alt=""
               className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10 md:h-[2.7rem] md:w-[2.7rem]"
             />
+            {/* Кыргызский слоган — 3 строки и длиннее, поэтому шрифт мельче, а блок шире */}
             <span
-              className="hidden min-w-0 text-[12px] font-medium leading-tight text-neutral-800 sm:block sm:max-w-[13rem] sm:text-[13px] md:max-w-[17rem] xl:text-sm"
+              className={`hidden min-w-0 font-medium text-neutral-800 sm:block ${
+                lang === 'ky'
+                  ? 'text-[11px] leading-[1.2] sm:max-w-[16rem] md:max-w-[19rem] xl:text-[12px]'
+                  : 'text-[12px] leading-tight sm:max-w-[13rem] sm:text-[13px] md:max-w-[17rem] xl:text-sm'
+              }`}
               dangerouslySetInnerHTML={{ __html: dict?.header?.slogan || 'ATK' }}
             />
           </Link>
@@ -317,7 +322,11 @@ export default function Header() {
             <Link href={`/${lang}`} onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
               <img src="/atk-emblem.png" alt="" className="h-9 w-9 object-contain" />
               <span
-                className="max-w-[14rem] text-[12px] font-medium leading-tight text-neutral-800 sm:text-[13px]"
+                className={`font-medium text-neutral-800 ${
+                  lang === 'ky'
+                    ? 'max-w-[16rem] text-[11px] leading-[1.2]'
+                    : 'max-w-[14rem] text-[12px] leading-tight sm:text-[13px]'
+                }`}
                 dangerouslySetInnerHTML={{ __html: dict?.header?.slogan || 'ATK' }}
               />
             </Link>

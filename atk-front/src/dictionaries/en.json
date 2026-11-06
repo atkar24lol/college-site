@@ -25,7 +25,6 @@
       "rewards": "Awards",
       "internationalCooperation": "International Cooperation"
     },
-
     "previews": {
       "titles": {
         "electronLibrary": "Electronic Library",
@@ -41,7 +40,8 @@
         "aboutTeachers": "Our Teachers",
         "additionalEducation": "Additional Education",
         "searchResult": "Site Search",
-        "internationalCooperation": "International Cooperation"
+        "internationalCooperation": "International Cooperation",
+        "specialities": "Specialties"
       },
       "descriptions": {
         "electronLibrary": "electronLibrary On this page, you can explore our electronic library",
@@ -57,7 +57,8 @@
         "aboutTeachers": "On this page, you can learn more about our specialists",
         "additionalEducation": "Classes are taught by experienced teachers and highly qualified specialists from leading partner companies of ATC. The college cooperates with business structures and government agencies on issues of organizing internships and employment of students. Upon completion of the training, the listener is issued a graduation document, established by the ATC: a training certificate, a certificate of advanced training, a diploma of professional retraining.",
         "searchResult": "Search for information on the KNAU portal",
-        "internationalCooperation": "On this page, you can get acquainted with our offers for further cooperation"
+        "internationalCooperation": "On this page, you can get acquainted with our offers for further cooperation",
+        "specialities": "On this page you can explore the specialties the college trains students in"
       }
     }
   },
@@ -93,7 +94,6 @@
       "title": "Map",
       "description": "Interactive map: zoom and the college location in the city."
     },
-
     "mainInfoBlock": {
       "titles": {
         "one": "Your journey starts here",
@@ -108,7 +108,6 @@
         "ten": "AGRICULTURAL ENTREPRENEURSHIP",
         "eleven": "ECOLOGY AND ENVIRONMENTAL PROTECTION"
       },
-
       "descriptions": {
         "one": "Welcome to our university, we have a lot here",
         "two": "Agronomy is the science of cultivating agricultural crops, improving soil, and increasing yield.",
@@ -123,7 +122,6 @@
         "eleven": "Ecology is the science of the interaction between organisms and their environment."
       }
     },
-
     "mainBlockFeedback": {
       "title": "Feedback",
       "descriptionOne": "We will be happy to answer your questions",
@@ -185,7 +183,6 @@
       "descriptionOne": "Description for mission #1",
       "descriptionTwo": "Description for mission #2"
     },
-
     "values": {
       "title": "College Values",
       "valueOne": {
@@ -193,26 +190,22 @@
         "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
         "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
       },
-
       "valueTwo": {
         "title": "Value #2",
         "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
         "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
       },
-
       "valueThree": {
         "title": "Value #3",
         "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
         "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
       }
     },
-
     "strategicGoal": {
       "title": "Strategic Goal",
       "descriptionOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien",
       "descriptionTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum risus nec massa ultrices maximus. Duis molestie ullamcorper sapien"
     },
-
     "routesLearning": {
       "title": "Main Directions of Education Quality Policy",
       "routeOne": {
@@ -284,7 +277,6 @@
     "subtitle": "For admissions and partnership inquiries, please use the contacts below.",
     "formTitle": "Feedback",
     "addressLabel": "Address",
-
     "feedback": {
       "name": "Your Name",
       "mail": "Your Email",
@@ -304,13 +296,11 @@
       "button": "All News",
       "aboutButton": "Learn More"
     },
-
     "programsBlock": {
       "title": "International Education Programs",
       "titleTwo": "Title",
       "description": "Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description"
     },
-
     "capibilitiesStudentsBlock": {
       "title": "Opportunities for Students to Study Abroad",
       "texts": {
@@ -322,7 +312,6 @@
         "buttonTwo": "Program"
       }
     },
-
     "eventsBlock": {
       "title": "Joint Events",
       "eventOne": {
@@ -434,6 +423,33 @@
     "faq": {
       "title": "Frequently Asked Questions",
       "lead": "If you did not find an answer, contact us via the form on the contacts page."
+    }
+  },
+  "specialities": {
+    "titles": {
+      "one": "Your journey starts here",
+      "two": "AGRONOMY",
+      "three": "VETERINARY SCIENCE",
+      "four": "HYDRAULIC ENGINEERING",
+      "five": "LAND MANAGEMENT",
+      "six": "ICHTHYOLOGY AND FISH FARMING",
+      "seven": "LAND RECLAMATION, REHABILITATION, AND SOIL PROTECTION",
+      "eight": "APPLIED GEODESY",
+      "nine": "APPLIED INFORMATICS",
+      "ten": "AGRICULTURAL ENTREPRENEURSHIP",
+      "eleven": "ECOLOGY AND ENVIRONMENTAL PROTECTION"
+    },
+    "descriptions": {
+      "two": "AGRONOMIST is one of the oldest professions.\n\nThe agronomist is the main conductor of science in agriculture, defining farming technology and how work is organized.\n\nToday agronomists are in demand at large agricultural enterprises as well as small farms, orangeries, nurseries and greenhouses.\n\nThe AGRONOMIST is one of the key figures in the countryside. Their main task is to improve agricultural production and manage the work of machine operators, field workers and other staff. Advantages of the profession: varied work, usefulness and importance to society.",
+      "three": "VETERINARY SCIENCE literally means caring for and treating livestock. It is a field of scientific knowledge and practical work aimed at fighting animal diseases, protecting people from infections common to animals and humans, producing sanitary-safe products and solving veterinary and sanitary problems of environmental protection.\nIn the Kyrgyz Republic, livestock farming is one of the main branches of agriculture. The efficiency and volume of its output depend largely on veterinary services.\nBroad training allows graduates to apply their knowledge both in the agro-industrial complex and in other sectors of the country's economy.",
+      "four": "Kyrgyzstan is a mountainous country, and its rivers are the main source for developing irrigation and energy.\n\nHYDRAULIC ENGINEERING belongs to one of the largest branches of the national economy — the capital construction of irrigation systems.\n\nQualified training of hydraulic construction technicians allows graduates to work across the whole range of water management and hydropower. Graduates of the \"Hydraulic Engineering\" specialty build multi-purpose waterworks, install hydraulic structures, and construct hydropower plants, bridges, pumping stations and water supply systems.",
+      "five": "Everyone on the planet understands that land is the most priceless wealth. The well-being, economy and ecology of a state depend largely on how people manage land resources.\n\nToday a rational, scientific approach to distributing the country's land resources is a top priority. Graduates of the land management department are prepared to solve land management tasks. They can work in regional, city and district offices of the State Agency for Registration of Rights to Real Estate under the Government of the Kyrgyz Republic, as well as in local self-government bodies. College graduates are also in demand at design and research organizations, private real estate agencies and other organizations dealing with land use.",
+      "six": "A FISH FARMER works at industrial fish farms, breeding and raising fish in specially equipped ponds, and grows large quantities of fish feed — aquatic plants and animal organisms.\n\nA FISH FARMER organizes and controls the technological process at enterprises that breed and raise young fish, market fish and other aquaculture objects, carries out selection and breeding work, and introduces and monitors fishing rules and the protection of fishery waters from pollution.\n\nA fish farming technician needs the following professional qualities: observation skills, attention, good memory and physical endurance.",
+      "seven": "Kyrgyzstan is a mountainous republic where a guaranteed harvest in many areas is only possible with reclamation-based farming.\n\nDeveloping land reclamation to raise crop yields and meet the population's need for food is highly relevant today. This has created the need to train specialists in the republic who can solve practical problems of the efficient use, protection and management of water resources.\n\nHighly efficient use of the country's natural, climatic, land and water resources depends mainly on the qualifications of specialists in land reclamation, rehabilitation and protection.\n\nGraduates of the \"Land Reclamation, Rehabilitation and Soil Protection\" specialty can apply their broad knowledge in design, construction, repair and operation organizations of the Department of Water Resources and the Ministry of Agriculture of the Kyrgyz Republic, as well as in reclamation, environmental protection and irrigation systems and complexes.",
+      "eight": "GEODESY is the science of determining the shape and size of the Earth and of measuring the land surface to show it on plans and maps. It is based on two fundamental sciences — mathematics and physics. \"Geodesy\" is a word of Greek origin meaning \"dividing the earth\".\n\nGeodesy graduates are ready to work in the construction of industrial and civil buildings and in engineering and geodetic surveys needed to design roads and railways, irrigation networks, settlements, airports, hydraulic structures, power lines and communication lines.\n\nToday a geodesy technician also has a wide field of work in land and urban cadastre and in establishing and fixing the boundaries of territorial units.",
+      "nine": "INFORMATICS is the fastest-growing field of science and practice of the 21st century. Human civilization has entered a new period — building an information society. In developed countries, 60–70% of the working population is now employed in information processing.\n\nAPPLIED INFORMATICS is an unusual specialty. It combines computer science with the areas where computer skills can be applied: economics, management, design, law and much more. In short, an applied informatics specialist is always a \"two-in-one\" professional. All students of \"Applied Informatics\" study computer disciplines: informatics and programming, higher mathematics, operating systems, information security and network administration.",
+      "ten": "Kyrgyzstan is an agrarian country. Agriculture is an important sector of the economy and provides more than 40% of the gross domestic product (GDP). About three million people, or 60% of the country's population, live in rural areas. As a result of the agrarian and land reform, there are 301,935 farms in the republic, which urgently need versatile technicians who know the basics of crop and livestock production, agricultural mechanization and the agrarian economy. The set of disciplines provides a universal education needed by the modern agricultural sector in a market economy.\n\nPractical training takes place on farms in Kyrgyzstan and at agricultural enterprises in Germany.\n\nAfter graduation, graduates can:\n\n— carry out marketing planning and keep accounts and reports for farms and other agricultural enterprises;\n\n— work on and manage their own farm;\n\n— work for the Rural Advisory Service and local administration.",
+      "eleven": "Today the word \"ECOLOGY\" is used at every level of society — from ordinary citizens to company managers and heads of state.\n\nThis is due to the current environmental crisis, when pollution has reached a level that threatens life on a planetary scale.\n\nGraduates of the \"Ecology and Environmental Protection\" specialty:\n\n— help ensure global and national security through environmental cooperation between all countries of the world;\n\n— carry out mandatory independent environmental assessments of planned, under-construction and operating facilities that are sources of increased danger;\n\n— investigate the causes of natural disasters and develop ways to minimize human impact on nature.\n\nGraduates can work in state environmental protection organizations and in the environmental departments of large enterprises: for example, building any industrial facility always requires an environmental impact assessment."
     }
   }
 }

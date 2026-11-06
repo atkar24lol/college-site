@@ -1,42 +1,34 @@
 'use client';
 
-import L from 'leaflet';
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import { useParams } from 'next/navigation';
+
+// Метка колледжа на карте.
+const POINT = { lat: 42.85147, lng: 74.60669 };
+const ZOOM = 17;
+
+// Язык сайта → язык подписей и интерфейса карты (параметр hl у Google Maps).
+const MAP_LANG = { ru: 'ru', ky: 'ky', en: 'en' };
 
 const Map = ({ ariaLabel = 'Карта' }) => {
-  const position = [42.852111, 74.605192];
-  const point = [42.85147, 74.60669];
-
-  const customIconActive = L.icon({
-    iconUrl: '/map-marker-active.svg',
-    iconSize: [40, 55],
-  });
-
-  // const handleGetPoints = useCallback(async () => {
-  //   const response = await API.get('/points/');
-  //   const data = response.data;
-  //   setPointsData(data);
-  // }, []);
-
-  // useEffect(() => {
-  //   handleGetPoints();
-  // }, [handleGetPoints]);
+  const params = useParams();
+  const hl = MAP_LANG[params?.lang] || 'ru';
+  // Прямой адрес встраивания (maps.google.com/maps?output=embed редиректит сюда же).
+  const src =
+    `https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s${POINT.lat},${POINT.lng}` +
+    `!6i${ZOOM}!3m1!1s${hl}!5m1!1s${hl}`;
 
   return (
     <div className="w-full" role="region" aria-label={ariaLabel}>
-      <MapContainer
-            className="z-10 h-[280px] w-full sm:h-[320px] md:h-[400px]"
-        center={position}
-        zoom={17}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={point} icon={customIconActive}></Marker>
-      </MapContainer>
+      {/* key={hl}: при смене языка iframe пересоздаётся и карта перерисовывается на новом языке */}
+      <iframe
+        key={hl}
+        src={src}
+        title={ariaLabel}
+        className="z-10 block h-[280px] w-full border-0 sm:h-[320px] md:h-[400px]"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        allowFullScreen
+      />
     </div>
   );
 };

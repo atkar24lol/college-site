@@ -1,7 +1,7 @@
 'use client';
 
 import { ClientPageTitle } from '@/components/ui/ClientPageTitle';
-import { dateLocaleForLang } from '@/lib/locale';
+import { dateLocaleForLang, localizedField } from '@/lib/locale';
 import { API } from '@/requester';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -56,8 +56,8 @@ function PriorityCard({ lines, imageSrc, imageAlt, reverse }) {
 }
 
 function AdmissionDateCard({ data, lang, dateLocale }) {
-  const title = data?.[`title_${lang}`];
-  const description = data?.[`description_${lang}`];
+  const title = localizedField(data, 'title', lang);
+  const description = localizedField(data, 'description', lang);
   const raw = data?.event_date;
   const d = raw ? new Date(raw) : null;
   const valid = d && !Number.isNaN(d.getTime());
@@ -273,8 +273,8 @@ export default function Entrants({ dict }) {
                 {faq.map((item, index) => (
                   <FaqItem
                     key={item.id ?? index}
-                    question={item?.[`question_${lang}`]}
-                    answer={item?.[`answer_${lang}`]}
+                    question={localizedField(item, 'question', lang)}
+                    answer={localizedField(item, 'answer', lang)}
                   />
                 ))}
               </div>

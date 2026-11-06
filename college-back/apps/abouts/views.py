@@ -99,6 +99,9 @@ class GraduateViewSet(ModelViewSet):
 
 @method_decorator(csrf_exempt, name="dispatch")
 class Sending(APIView):
+    # Публичная форма: без SessionAuthentication DRF не требует CSRF-токен,
+    # даже если в браузере есть сессия админки (иначе «CSRF Failed: CSRF token missing»).
+    authentication_classes = ()
     permission_classes = (AllowAny,)
 
     @swagger_auto_schema(request_body=SendingSerializer, responses={200: "Question was sent"})
