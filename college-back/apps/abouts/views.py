@@ -30,7 +30,7 @@ class Email_sendingViewSet(ModelViewSet):
 
 
 class FAQViewSet(ModelViewSet):
-    queryset = FAQ.objects.all()
+    queryset = FAQ.objects.order_by("id")
     serializer_class = FAQSerializer
     permission_classes = (AllowAny,)
     filter_backends = [filters.DjangoFilterBackend, SearchFilter]
