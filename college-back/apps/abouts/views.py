@@ -2,7 +2,8 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from django.conf import settings
-from django.core.mail import send_mail
+import logging
+from django.core.mail import EmailMessage
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg.utils import swagger_auto_schema
@@ -19,6 +20,8 @@ from apps.education.serializers import *
 from apps.news.serializers import *
 from .models import *
 from .serializers import *
+
+logger = logging.getLogger(__name__)
 
 class Email_sendingViewSet(ModelViewSet):
     queryset = Email_sending.objects.all()
@@ -106,28 +109,35 @@ class Sending(APIView):
 
     @swagger_auto_schema(request_body=SendingSerializer, responses={200: "Question was sent"})
     def post(self, request, *args, **kwargs):
+        serializer = SendingSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({"error": "invalid", "fields": serializer.errors}, status=400)
+        receiver = Email_sending.objects.first()
+        if not receiver:
+            logger.error("Обратная связь: в админке не указана почта для обращений (Email_sending).")
+            return Response({"error": "not_configured"}, status=503)
+
+        data = serializer.validated_data
+        msg = EmailMessage(
+            subject="Обращение с сайта АТК: " + data["name"],
+            body=(
+                f"Имя: {data['name']}\n"
+                f"Почта для ответа: {data['email']}\n\n"
+                f"Обращение:\n{data['info_text']}"
+            ),
+            # Отправитель — почтовый ящик из настроек сервера (SMTP), получатель — из админки.
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[receiver.receiver],
+            # Кнопка «Ответить» в почте сразу отвечает посетителю.
+            reply_to=[data["email"]],
+        )
         try:
-            serializer = SendingSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            receiver = Email_sending.objects.first()
-            if not receiver:
-                return Response(
-                    {"error": "Получатель почты не настроен в админке (Email_sending)."},
-                    status=503,
-                )
-            send_mail(
-                subject="Обращение с сайта АТК: " + serializer.validated_data["name"],
-                message=(
-                    f"Имя: {serializer.validated_data['name']}\n"
-                    f"Почта для ответа: {serializer.validated_data['email']}\n\n"
-                    f"Обращение:\n{serializer.validated_data['info_text']}"
-                ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[receiver.receiver],
-            )
-            return Response({"message": "success"}, status=200)
-        except Exception as e:
-            return Response({"error": str(e)}, status=400)
+            msg.send()
+        except Exception:
+            # Подробности — в логах сервера; посетителю показываем понятный текст на фронте.
+            logger.exception("Обратная связь: не удалось отправить письмо через SMTP")
+            return Response({"error": "send_failed"}, status=502)
+        return Response({"message": "success"}, status=200)
     
 
 query_param = openapi.Parameter(

@@ -5,13 +5,14 @@ from django.db import models
 class Email_sending(models.Model):
     receiver = models.EmailField(
         max_length=254,
-        verbose_name="Почта для системных писем",
-        help_text="С этого адреса отправляются письма из формы обратной связи (и как получатель копии). Должна совпадать с настройками SMTP.",
+        verbose_name="Куда приходят обращения",
+        help_text="На эту почту будут приходить сообщения из формы «Обратная связь» на сайте. "
+                  "Можно указать любую почту, которую вы регулярно проверяете.",
     )
 
     class Meta:
-        verbose_name = "Почта отправителя (обратная связь)"
-        verbose_name_plural = "Почта отправителя (обратная связь)"
+        verbose_name = "Почта для обращений (обратная связь)"
+        verbose_name_plural = "Почта для обращений (обратная связь)"
 
 
 class FAQ(models.Model):

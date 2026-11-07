@@ -54,15 +54,10 @@ export default function Contacts({ dict }) {
       setEmail('');
       setInfoText('');
     } catch (err) {
+      // Технические детали остаются в логах сервера; посетителю — понятный текст на его языке.
+      console.error('Feedback form:', err?.response?.data || err);
       setStatus('error');
-      const d = err?.response?.data;
-      let msg = '';
-      if (d && typeof d === 'object') {
-        msg = d.error || d.detail || (Array.isArray(d) ? d.join(', ') : JSON.stringify(d));
-      } else if (typeof d === 'string') {
-        msg = d;
-      }
-      setErrorMessage(msg);
+      setErrorMessage('');
     }
   };
 
